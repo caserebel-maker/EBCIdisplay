@@ -31,8 +31,8 @@
             font-family: 'Prompt', sans-serif;
             display: flex;
             flex-direction: column;
-            min-height: 100vh;
-            overflow-x: hidden;
+            height: 100vh; /* บังคับความสูงเต็มจอพอดี */
+            overflow: hidden; /* ห้ามเลื่อนจอ */
         }
 
         /* Animation พื้นหลังหมุน */
@@ -44,9 +44,10 @@
             height: 300vh;
             z-index: -1;
             background-image: url('Strategic-Proposal.png');
-            background-size: cover;
+            background-size: 100vw auto; 
+            background-repeat: repeat;
             background-position: center;
-            opacity: 0.35; 
+            opacity: 0.25; 
             mix-blend-mode: screen; 
             animation: slowSpin 150s linear infinite; 
             pointer-events: none; 
@@ -60,86 +61,81 @@
         /* Fullscreen Button */
         .fullscreen-btn {
             position: fixed;
-            top: 20px;
-            right: 20px;
+            top: 15px;
+            right: 15px;
             z-index: 100;
             background: rgba(255, 255, 255, 0.1);
             border: 1px solid rgba(255, 255, 255, 0.2);
-            border-radius: 12px;
-            width: 44px;
-            height: 44px;
+            border-radius: 10px;
+            width: 38px;
+            height: 38px;
             display: flex;
             align-items: center;
             justify-content: center;
             cursor: pointer;
             backdrop-filter: blur(10px);
             color: white;
-            transition: all 0.3s ease;
         }
 
-        .fullscreen-btn:hover {
-            background: rgba(255, 255, 255, 0.2);
-            transform: scale(1.05);
-        }
-
-        /* Header Layout */
+        /* Header & Logo */
         header {
             display: flex;
             flex-direction: column;
             align-items: center;
-            padding: 3vh 2vw 1vh 2vw;
+            padding: 2vh 0 1vh 0;
+            flex-shrink: 0;
         }
 
         .main-logo {
-            width: 85%;
-            max-width: 420px; 
+            width: 65%; /* ย่อขนาดโลโก้ลง */
+            max-width: 280px; 
             height: auto;
             object-fit: contain;
-            margin-bottom: 5px;
-            filter: drop-shadow(0 4px 8px rgba(0,0,0,0.5)); 
+            filter: drop-shadow(0 4px 6px rgba(0,0,0,0.5)); 
         }
 
+        /* Main Container */
         .container {
             flex: 1;
             display: flex;
             flex-direction: column;
-            padding: 2vh 4vw 4vh 4vw;
-            gap: 3vh;
+            padding: 0 4vw 2vh 4vw;
+            gap: 1.5vh; /* ลด Gap ระหว่าง Section */
+            justify-content: space-between;
         }
 
         .section-title {
-            font-size: 1rem;
+            font-size: 0.85rem;
             color: var(--text-main);
-            margin: 0 0 10px 5px;
+            margin: 0 0 8px 5px;
             font-weight: 500;
             text-transform: uppercase;
             letter-spacing: 1px;
-            opacity: 0.9;
+            opacity: 0.8;
         }
 
+        /* Card Layouts */
         .card-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 16px;
+            gap: 12px;
         }
 
         .card {
             background: var(--widget-bg);
             border: 1px solid var(--widget-border);
-            border-radius: 24px; 
-            padding: 24px;
-            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.25);
-            backdrop-filter: blur(25px);
-            -webkit-backdrop-filter: blur(25px);
+            border-radius: 20px; 
+            padding: 15px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
             position: relative;
-            overflow: hidden;
-            min-height: 160px;
             display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: center;
             text-align: center;
-            gap: 8px;
+            overflow: hidden;
         }
 
         .card-row {
@@ -156,141 +152,117 @@
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
-            width: 75%; 
-            height: 75%;
-            opacity: 0.12; 
+            width: 60%; 
+            height: 60%;
+            opacity: 0.1; 
             z-index: 1;
             display: flex;
             align-items: center;
             justify-content: center;
-            pointer-events: none;
         }
 
-        .card-icon-bg svg {
-            width: 100%;
-            height: 100%;
-        }
+        .card-icon-bg svg { width: 100%; height: 100%; }
 
         .card h3 {
             margin: 0;
-            font-size: 0.95rem;
+            font-size: 0.8rem;
             color: var(--text-muted);
             font-weight: 500;
             text-transform: uppercase;
-            letter-spacing: 1px;
+            letter-spacing: 0.5px;
         }
 
         .card h3.large-title {
-            font-size: 1.3rem; 
-            color: rgba(255, 255, 255, 0.95);
-            font-weight: 500;
+            font-size: 1.1rem; 
+            color: rgba(255, 255, 255, 0.9);
         }
 
         .card .value {
-            font-size: 2.2rem;
+            font-size: 1.8rem;
             font-weight: 600;
-            letter-spacing: 0px;
             line-height: 1.1;
         }
 
         .card .value.huge-value {
-            font-size: 3rem; 
+            font-size: 2.4rem; 
             font-weight: 600;
-            line-height: 1.1;
         }
 
         .card .change {
-            font-size: 1rem;
-            font-weight: 400;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 4px;
-            margin-top: 6px;
-        }
-
-        .change.up { color: var(--success); }
-        .change.down { color: var(--danger); }
-        .change.neutral { color: var(--text-muted); }
-
-        .sub-value {
-            font-size: 1rem;
-            color: var(--text-muted);
-            font-weight: 400;
+            font-size: 0.85rem;
             margin-top: 4px;
         }
 
-        .card-full {
-            grid-column: span 2;
+        .sub-value {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            margin-top: 2px;
         }
 
+        /* Clock Widget */
         .clock-widget {
-            background: rgba(20, 20, 20, 0.6);
+            background: rgba(20, 20, 20, 0.5);
             border: 1px solid var(--widget-border);
-            border-radius: 24px;
-            padding: 20px;
+            border-radius: 20px;
+            padding: 12px;
             text-align: center;
-            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
-            backdrop-filter: blur(25px);
-            -webkit-backdrop-filter: blur(25px);
-            margin-bottom: 10px;
+            backdrop-filter: blur(20px);
+            margin-bottom: 5px;
         }
 
         .clock-widget .clock {
-            font-size: 5rem;
+            font-size: 4rem;
             font-weight: 100; 
             color: #ffffff;
             line-height: 1;
             letter-spacing: 2px;
-            font-variant-numeric: tabular-nums; 
         }
 
         .clock-widget .date {
-            font-size: 1.1rem;
+            font-size: 0.9rem;
             color: var(--accent);
-            margin-top: 12px;
+            margin-top: 6px;
             font-weight: 500;
             text-transform: uppercase;
-            letter-spacing: 1.5px;
         }
 
-        .news-list { display: flex; flex-direction: column; gap: 15px; }
+        /* ข่าวสาร */
+        .news-list { display: flex; flex-direction: column; gap: 8px; }
         .news-item {
-            display: flex; gap: 12px; align-items: flex-start;
+            display: flex; gap: 10px; align-items: flex-start;
             border-bottom: 1px solid rgba(255,255,255,0.05);
-            padding-bottom: 15px; font-size: 1.05rem; line-height: 1.4; color: rgba(255,255,255,0.9);
-            font-weight: 300;
+            padding-bottom: 8px; font-size: 0.95rem; line-height: 1.3; color: rgba(255,255,255,0.9);
         }
         .news-item:last-child { border-bottom: none; padding-bottom: 0; }
         .news-tag {
-            background: rgba(255, 255, 255, 0.1); color: #fff; padding: 4px 8px;
-            border-radius: 6px; font-size: 0.75rem; font-weight: 600; white-space: nowrap;
+            background: rgba(255, 255, 255, 0.1); color: #fff; padding: 2px 6px;
+            border-radius: 4px; font-size: 0.7rem; font-weight: 600;
         }
         
         .featured-news {
-            display: flex; flex-direction: column; gap: 12px; margin-bottom: 20px;
-            padding-bottom: 20px; border-bottom: 1px solid rgba(255,255,255,0.08);
+            display: flex; gap: 12px; margin-bottom: 12px;
+            padding-bottom: 12px; border-bottom: 1px solid rgba(255,255,255,0.08);
+            align-items: center;
         }
-        .featured-news-img { width: 100%; height: 200px; object-fit: cover; border-radius: 12px; }
-        .featured-news-title { font-size: 1.3rem; font-weight: 500; line-height: 1.4; margin: 0; color: var(--text-main); }
+        .featured-news-img { width: 100px; height: 70px; object-fit: cover; border-radius: 10px; flex-shrink: 0; }
+        .featured-news-title { font-size: 1rem; font-weight: 500; line-height: 1.3; margin: 0; }
         
         .update-indicator {
-            position: absolute; top: 18px; right: 18px;
-            width: 8px; height: 8px; border-radius: 50%; background-color: var(--success);
+            position: absolute; top: 12px; right: 12px;
+            width: 6px; height: 6px; border-radius: 50%; background-color: var(--success);
             opacity: 0; transition: opacity 0.5s; z-index: 5;
         }
         .updated .update-indicator { opacity: 1; }
         
-        .aqi-card-good { background: linear-gradient(145deg, rgba(46, 125, 50, 0.85), rgba(76, 175, 80, 0.7)) !important; border: 1px solid rgba(255, 255, 255, 0.2) !important; }
-        .aqi-card-moderate { background: linear-gradient(145deg, rgba(212, 160, 23, 0.85), rgba(234, 179, 8, 0.7)) !important; border: 1px solid rgba(255, 255, 255, 0.2) !important; }
-        .aqi-card-sensitive { background: linear-gradient(145deg, rgba(230, 81, 0, 0.85), rgba(255, 112, 67, 0.7)) !important; border: 1px solid rgba(255, 255, 255, 0.2) !important; }
-        .aqi-card-unhealthy { background: linear-gradient(145deg, rgba(185, 28, 28, 0.85), rgba(220, 38, 38, 0.7)) !important; border: 1px solid rgba(255, 255, 255, 0.2) !important; }
+        /* AQI States */
+        .aqi-card-good { background: linear-gradient(145deg, rgba(46, 125, 50, 0.8), rgba(76, 175, 80, 0.6)) !important; }
+        .aqi-card-moderate { background: linear-gradient(145deg, rgba(212, 160, 23, 0.8), rgba(234, 179, 8, 0.6)) !important; }
+        .aqi-card-sensitive { background: linear-gradient(145deg, rgba(230, 81, 0, 0.8), rgba(255, 112, 67, 0.6)) !important; }
+        .aqi-card-unhealthy { background: linear-gradient(145deg, rgba(185, 28, 28, 0.8), rgba(220, 38, 38, 0.6)) !important; }
 
-        .aqi-card-good h3, .aqi-card-good .value, .aqi-card-good .change,
-        .aqi-card-moderate h3, .aqi-card-moderate .value, .aqi-card-moderate .change,
-        .aqi-card-sensitive h3, .aqi-card-sensitive .value, .aqi-card-sensitive .change,
-        .aqi-card-unhealthy h3, .aqi-card-unhealthy .value, .aqi-card-unhealthy .change {
-            color: #ffffff !important; text-shadow: 0 1px 3px rgba(0, 0, 0, 0.4);
+        .aqi-card-good h3, .aqi-card-good .value, .aqi-card-moderate h3, .aqi-card-moderate .value,
+        .aqi-card-sensitive h3, .aqi-card-sensitive .value, .aqi-card-unhealthy h3, .aqi-card-unhealthy .value {
+            color: #ffffff !important;
         }
     </style>
 </head>
@@ -299,141 +271,88 @@
     <div class="bg-animation-container"></div>
 
     <button class="fullscreen-btn" id="fsBtn" onclick="toggleFullScreen()" title="Toggle Fullscreen">
-        <i data-lucide="maximize-2"></i>
+        <i data-lucide="maximize-2" style="width: 20px;"></i>
     </button>
 
     <header>
-        <img src="40white-1_0.png" 
-             alt="40th EBCI Anniversary Logo" 
-             class="main-logo"
-             onerror="this.src='https://via.placeholder.com/420x120/000000/ff0000?text=40th+EBCI+Logo+Here'; this.onerror=null;">
+        <img src="40white-1_0.png" alt="Logo" class="main-logo" onerror="this.style.display='none'">
     </header>
 
     <div class="container">
         
         <div class="clock-widget">
-            <div class="clock" id="timeDisplay">00:00:00</div>
-            <div class="date" id="dateDisplay">LOADING DATE...</div>
+            <div class="clock" id="timeDisplay">00 : 00 : 00</div>
+            <div class="date" id="dateDisplay">LOADING...</div>
         </div>
 
         <section>
             <h2 class="section-title">BANGKOK METROPOLIS</h2>
             <div class="card-grid">
-                
                 <div class="card" id="weatherCard">
                     <div class="update-indicator"></div>
-                    <div class="card-icon-bg" style="color: rgba(56, 189, 248, 0.2);">
-                        <i data-lucide="cloud-sun"></i>
-                    </div>
-                    <div class="card-row">
-                        <h3>WEATHER</h3>
-                    </div>
+                    <div class="card-icon-bg" style="color: #38bdf8;"><i data-lucide="cloud-sun"></i></div>
+                    <div class="card-row"><h3>WEATHER</h3></div>
                     <div class="card-row">
                         <div class="value" id="tempValue">--°C</div>
-                        <div class="change neutral" id="weatherDesc">LOADING...</div>
+                        <div class="change neutral" id="weatherDesc" style="font-size: 0.75rem;">LOADING...</div>
                     </div>
                 </div>
-
                 <div class="card" id="aqiCard">
                     <div class="update-indicator"></div>
-                    <div class="card-icon-bg" style="color: rgba(255, 255, 255, 0.2);">
-                        <i data-lucide="wind"></i>
-                    </div>
-                    <div class="card-row">
-                        <h3>PM2.5 (IQAIR)</h3>
-                    </div>
+                    <div class="card-icon-bg" style="color: #fff;"><i data-lucide="wind"></i></div>
+                    <div class="card-row"><h3>PM2.5 (IQAIR)</h3></div>
                     <div class="card-row">
                         <div class="value" id="aqiValue">--</div>
-                        <div class="change neutral" id="aqiDesc">LOADING...</div>
+                        <div class="change neutral" id="aqiDesc" style="font-size: 0.75rem;">LOADING...</div>
                     </div>
                 </div>
-
             </div>
         </section>
 
         <section>
             <h2 class="section-title">MARKET UPDATES</h2>
-            <div class="card-grid">
-                
+            <div class="card-grid" style="grid-template-rows: repeat(2, 1fr);">
                 <div class="card" id="oilCard">
                     <div class="update-indicator"></div>
-                    <div class="card-icon-bg" style="color: rgba(244, 63, 94, 0.15);">
-                        <i data-lucide="droplet"></i>
-                    </div>
-                    <div class="card-row">
-                        <h3 class="large-title">WTI CRUDE OIL</h3>
-                    </div>
-                    <div class="card-row">
-                        <div class="value huge-value" id="oilPrice">--</div>
-                        <div class="change neutral" id="oilChange">--</div>
-                    </div>
+                    <div class="card-icon-bg" style="color: #f43f5e;"><i data-lucide="droplet"></i></div>
+                    <div class="card-row"><h3 class="large-title">OIL WTI</h3></div>
+                    <div class="card-row"><div class="value huge-value" id="oilPrice">--</div><div class="change neutral" id="oilChange">--</div></div>
                 </div>
-
                 <div class="card" id="goldCard">
                     <div class="update-indicator"></div>
-                    <div class="card-icon-bg" style="color: rgba(251, 191, 36, 0.15);">
-                        <i data-lucide="coins"></i>
-                    </div>
-                    <div class="card-row">
-                        <h3 class="large-title">GOLD PRICE</h3>
-                    </div>
-                    <div class="card-row">
-                        <div class="value huge-value" id="goldPriceThb">--</div>
-                        <div class="sub-value" id="goldPriceUsd">--</div>
-                        <div class="change neutral" id="goldChange">--</div>
-                    </div>
+                    <div class="card-icon-bg" style="color: #fbbf24;"><i data-lucide="coins"></i></div>
+                    <div class="card-row"><h3 class="large-title">GOLD TH</h3></div>
+                    <div class="card-row"><div class="value huge-value" id="goldPriceThb">--</div><div class="sub-value" id="goldPriceUsd">--</div></div>
                 </div>
-
                 <div class="card" id="btcCard">
                     <div class="update-indicator"></div>
-                    <div class="card-icon-bg" style="color: rgba(247, 147, 26, 0.15);">
-                        <i data-lucide="bitcoin"></i>
-                    </div>
-                    <div class="card-row">
-                        <h3 class="large-title" style="color: #f7931a;">BITCOIN USD</h3>
-                    </div>
-                    <div class="card-row">
-                        <div class="value huge-value" id="btcPrice">--</div>
-                        <div class="change neutral" id="btcChange">--</div>
-                    </div>
+                    <div class="card-icon-bg" style="color: #f7931a;"><i data-lucide="bitcoin"></i></div>
+                    <div class="card-row"><h3 class="large-title" style="color: #f7931a;">BITCOIN</h3></div>
+                    <div class="card-row"><div class="value huge-value" id="btcPrice">--</div><div class="change neutral" id="btcChange">--</div></div>
                 </div>
-
                 <div class="card" id="fxCard">
                     <div class="update-indicator"></div>
-                    <div class="card-icon-bg" style="color: rgba(10, 132, 255, 0.15);">
-                        <i data-lucide="banknote"></i>
-                    </div>
-                    <div class="card-row">
-                        <h3 class="large-title" style="color: #0a84ff;">USD / THB</h3>
-                    </div>
-                    <div class="card-row">
-                        <div class="value huge-value" id="fxPrice">--</div>
-                        <div class="change neutral" id="fxChange">--</div>
-                    </div>
+                    <div class="card-icon-bg" style="color: #0a84ff;"><i data-lucide="banknote"></i></div>
+                    <div class="card-row"><h3 class="large-title" style="color: #0a84ff;">USD / THB</h3></div>
+                    <div class="card-row"><div class="value huge-value" id="fxPrice">--</div><div class="change neutral" id="fxChange">--</div></div>
                 </div>
-
             </div>
         </section>
 
-        <section>
+        <section style="margin-top: 5px;">
             <h2 class="section-title">ข่าวเด่นประจำวัน</h2>
-            <div class="card card-full" style="align-items: stretch; text-align: left; margin-bottom: 20px;">
+            <div class="card card-full" style="align-items: stretch; text-align: left; padding: 12px;">
                 <div class="featured-news">
-                    <img src="https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Logistics AI" class="featured-news-img">
-                    <div style="display: flex; gap: 10px; align-items: center;">
-                        <span class="news-tag" style="background: rgba(10, 132, 255, 0.8);">TECH</span>
-                        <span style="font-size: 0.85rem; color: var(--text-muted);">2 ชั่วโมงที่ผ่านมา</span>
+                    <img src="https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?w=200&q=80" alt="News" class="featured-news-img">
+                    <div style="display: flex; flex-direction: column; gap: 4px;">
+                        <span class="news-tag" style="width: fit-content; background: rgba(10, 132, 255, 0.6);">TECH</span>
+                        <h4 class="featured-news-title">AI เริ่มเข้ามามีบทบาทในอุตสาหกรรมมากขึ้น ลดต้นทุนได้กว่า 20%</h4>
                     </div>
-                    <h4 class="featured-news-title">AI เริ่มเข้ามามีบทบาทในอุตสาหกรรมโลจิสติกส์มากขึ้น ลดต้นทุนได้กว่า 20%</h4>
                 </div>
                 <div class="news-list">
                     <div class="news-item">
-                        <span class="news-tag" style="background: rgba(255, 149, 0, 0.8);">ECONOMY</span>
-                        <span>ธนาคารกลางประกาศคงอัตราดอกเบี้ยนโยบาย ส่งผลให้ค่าเงินบาททรงตัวในกรอบ 35.00-35.50</span>
-                    </div>
-                    <div class="news-item">
-                        <span class="news-tag" style="background: rgba(255, 59, 48, 0.8);">LOCAL</span>
-                        <span>แจ้งหลีกเลี่ยงเส้นทาง! มีการซ่อมแซมพื้นผิวจราจรบนทางด่วนช่วงเย็นวันนี้ อาจทำให้รถติดสะสม</span>
+                        <span class="news-tag" style="background: rgba(255, 149, 0, 0.5);">ECON</span>
+                        <span>ธนาคารกลางประกาศคงอัตราดอกเบี้ยนโยบาย ส่งผลให้ค่าเงินบาททรงตัว</span>
                     </div>
                 </div>
             </div>
@@ -444,248 +363,112 @@
     <script>
         lucide.createIcons();
 
-        // Fullscreen Toggle Function
         function toggleFullScreen() {
-            const btn = document.getElementById('fsBtn');
             if (!document.fullscreenElement) {
-                document.documentElement.requestFullscreen().catch(err => {
-                    console.error(`Error: ${err.message}`);
-                });
-                btn.innerHTML = '<i data-lucide="minimize-2"></i>';
+                document.documentElement.requestFullscreen();
             } else {
-                if (document.exitFullscreen) {
-                    document.exitFullscreen();
-                }
-                btn.innerHTML = '<i data-lucide="maximize-2"></i>';
+                if (document.exitFullscreen) document.exitFullscreen();
             }
-            lucide.createIcons();
         }
 
         const IQAIR_API_KEY = '7c66e548-5227-458c-98b9-b0d2ac308166';
-        const OIL_API_KEY = ''; 
 
         function updateClock() {
             const now = new Date();
-            const hours = String(now.getHours()).padStart(2, '0');
-            const minutes = String(now.getMinutes()).padStart(2, '0');
-            const seconds = String(now.getSeconds()).padStart(2, '0');
-            document.getElementById('timeDisplay').textContent = `${hours} : ${minutes} : ${seconds}`;
-
-            const dateOptions = { weekday: 'short', day: 'numeric', month: 'short' };
-            const formattedDate = now.toLocaleDateString('en-GB', dateOptions); 
-            document.getElementById('dateDisplay').textContent = formattedDate;
+            const h = String(now.getHours()).padStart(2, '0');
+            const m = String(now.getMinutes()).padStart(2, '0');
+            const s = String(now.getSeconds()).padStart(2, '0');
+            document.getElementById('timeDisplay').textContent = `${h} : ${m} : ${s}`;
+            const opt = { weekday: 'short', day: 'numeric', month: 'short' };
+            document.getElementById('dateDisplay').textContent = now.toLocaleDateString('en-GB', opt).toUpperCase();
         }
 
-        function showUpdateEffect(cardId) {
-            const card = document.getElementById(cardId);
-            if(card) {
-                card.classList.add('updated');
-                setTimeout(() => card.classList.remove('updated'), 2000);
-            }
+        function showUpdateEffect(id) {
+            const el = document.getElementById(id);
+            if(el) { el.classList.add('updated'); setTimeout(() => el.classList.remove('updated'), 2000); }
         }
 
-        let lastBtc = 0;
-        let lastGoldUsd = 0;
-        let lastFx = 0;
-        let lastOilPrice = 0;
-        
-        let mockBtc = 68450;
-        let mockGoldThb = 41500;
-        let mockGoldUsd = 2350.50;
-        let mockFx = 35.45;
-        let mockOil = 75.35;
+        let lastBtc = 0, lastGoldUsd = 0, lastFx = 0, mockOil = 75.17;
 
-        function renderChange(current, last, elementId, prefix = '', suffix = '', reverseColor = false) {
-            const el = document.getElementById(elementId);
-            if (last === 0 || isNaN(current) || isNaN(last)) return;
-            
-            const diff = current - last;
-            if (Math.abs(diff) < 0.0001) return;
-
-            const diffText = diff > 0 ? `▲ +${prefix}${diff.toFixed(2)}${suffix}` : `▼ -${prefix}${Math.abs(diff).toFixed(2)}${suffix}`;
-            el.textContent = diffText;
-            
-            if (reverseColor) {
-                el.className = diff > 0 ? 'change down' : 'change up';
-            } else {
-                el.className = diff > 0 ? 'change up' : 'change down';
-            }
+        function renderChange(curr, last, id, pre = '', suf = '', rev = false) {
+            const el = document.getElementById(id);
+            if (!el || last === 0) return;
+            const d = curr - last;
+            if (Math.abs(d) < 0.0001) return;
+            el.textContent = d > 0 ? `▲ +${pre}${d.toFixed(2)}${suf}` : `▼ -${pre}${Math.abs(d).toFixed(2)}${suf}`;
+            el.className = rev ? (d > 0 ? 'change down' : 'change up') : (d > 0 ? 'change up' : 'change down');
         }
 
-        async function fetchGoldPrice() {
+        async function fetchData() {
+            // Gold
             try {
-                const binanceRes = await fetch('https://api.binance.com/api/v3/ticker/price?symbol=PAXGUSDT');
-                if(!binanceRes.ok) throw new Error("Binance API Failed");
-                const binanceData = await binanceRes.json();
-                const goldUsd = parseFloat(binanceData.price);
-                
-                document.getElementById('goldPriceUsd').textContent = `World: $${goldUsd.toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2})} / oz`;
-                renderChange(goldUsd, lastGoldUsd, 'goldChange', '$');
-                lastGoldUsd = goldUsd;
-
-                const thGoldRes = await fetch('https://api.chnwt.dev/thai-gold-api/latest');
-                if(!thGoldRes.ok) throw new Error("Thai Gold API Failed");
-                const thGoldData = await thGoldRes.json();
-                
-                const goldThbStr = thGoldData.response.price.gold_bar.sell;
-                const goldThb = parseFloat(goldThbStr.replace(/,/g, ''));
-                
-                document.getElementById('goldPriceThb').textContent = `${goldThb.toLocaleString()}`;
+                const r = await fetch('https://api.binance.com/api/v3/ticker/price?symbol=PAXGUSDT');
+                const d = await r.json();
+                const gu = parseFloat(d.price);
+                document.getElementById('goldPriceUsd').textContent = `World: $${gu.toLocaleString()}`;
+                renderChange(gu, lastGoldUsd, 'goldChange', '$'); lastGoldUsd = gu;
+                const r2 = await fetch('https://api.chnwt.dev/thai-gold-api/latest');
+                const d2 = await r2.json();
+                document.getElementById('goldPriceThb').textContent = d2.response.price.gold_bar.sell;
                 showUpdateEffect('goldCard');
-            } catch (error) {
-                console.warn("Using Fallback for Gold");
-                mockGoldThb += (Math.random() > 0.5 ? 50 : -50);
-                mockGoldUsd += (Math.random() * 4 - 2);
-                document.getElementById('goldPriceThb').textContent = `${mockGoldThb.toLocaleString()}`;
-                document.getElementById('goldPriceUsd').textContent = `World: $${mockGoldUsd.toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2})} / oz`;
-                renderChange(mockGoldUsd, lastGoldUsd || 2350, 'goldChange', '$');
-                lastGoldUsd = mockGoldUsd;
-                showUpdateEffect('goldCard');
+            } catch(e) { 
+                document.getElementById('goldPriceThb').textContent = "77,300";
+                document.getElementById('goldPriceUsd').textContent = "World: $2,350.50";
             }
-        }
 
-        async function fetchBitcoin() {
+            // BTC
             try {
-                const response = await fetch('https://api.binance.com/api/v3/ticker/price?symbol=BTCUSDT');
-                if(!response.ok) throw new Error("Binance API Failed");
-                const data = await response.json();
-                const btcUsd = parseFloat(data.price);
-                
-                document.getElementById('btcPrice').textContent = `${btcUsd.toLocaleString(undefined, {minimumFractionDigits: 0, maximumFractionDigits: 0})}`;
-                renderChange(btcUsd, lastBtc, 'btcChange', '$');
-                lastBtc = btcUsd;
+                const r = await fetch('https://api.binance.com/api/v3/ticker/price?symbol=BTCUSDT');
+                const d = await r.json();
+                const b = parseFloat(d.price);
+                document.getElementById('btcPrice').textContent = Math.round(b).toLocaleString();
+                renderChange(b, lastBtc, 'btcChange', '$'); lastBtc = b;
                 showUpdateEffect('btcCard');
-            } catch (error) {
-                console.warn("Using Fallback for BTC");
-                mockBtc += (Math.random() * 100 - 50);
-                document.getElementById('btcPrice').textContent = `${Math.round(mockBtc).toLocaleString()}`;
-                renderChange(mockBtc, lastBtc || 68450, 'btcChange', '$');
-                lastBtc = mockBtc;
-                showUpdateEffect('btcCard');
-            }
-        }
+            } catch(e) {}
 
-        async function fetchExchangeRate() {
+            // FX
             try {
-                const response = await fetch('https://open.er-api.com/v6/latest/USD');
-                if(!response.ok) throw new Error("FX API Failed");
-                const data = await response.json();
-                const fxRate = data.rates.THB;
-                
-                document.getElementById('fxPrice').textContent = `${fxRate.toFixed(2)}`;
-                renderChange(fxRate, lastFx, 'fxChange', '', ' ฿', true); 
-                lastFx = fxRate;
+                const r = await fetch('https://open.er-api.com/v6/latest/USD');
+                const d = await r.json();
+                const fx = d.rates.THB;
+                document.getElementById('fxPrice').textContent = fx.toFixed(2);
+                renderChange(fx, lastFx, 'fxChange', '', '', true); lastFx = fx;
                 showUpdateEffect('fxCard');
-            } catch (error) {
-                console.warn("Using Fallback for FX");
-                mockFx += (Math.random() * 0.04 - 0.02);
-                document.getElementById('fxPrice').textContent = `${mockFx.toFixed(2)}`;
-                renderChange(mockFx, lastFx || 35.45, 'fxChange', '', ' ฿', true);
-                lastFx = mockFx;
-                showUpdateEffect('fxCard');
-            }
-        }
+            } catch(e) {}
 
-        async function fetchEnvironment() {
+            // Environment
             try {
-                if (IQAIR_API_KEY && IQAIR_API_KEY !== '') {
-                    const res = await fetch(`https://api.airvisual.com/v2/city?city=Bangkok&state=Bangkok&country=Thailand&key=${IQAIR_API_KEY}`);
-                    const data = await res.json();
-                    
-                    if(data.status === "success") {
-                        const aqi = data.data.current.pollution.aqius;
-                        const temp = data.data.current.weather.tp;
-                        
-                        document.getElementById('aqiValue').textContent = `${aqi}`;
-                        document.getElementById('tempValue').textContent = `${temp}°C`;
-                        document.getElementById('weatherDesc').textContent = "UPDATED";
-                        
-                        const aqiCardEl = document.getElementById('aqiCard');
-                        const aqiDescEl = document.getElementById('aqiDesc');
-                        aqiCardEl.classList.remove('aqi-card-good', 'aqi-card-moderate', 'aqi-card-sensitive', 'aqi-card-unhealthy');
-                        
-                        if (aqi <= 50) { aqiCardEl.classList.add('aqi-card-good'); aqiDescEl.textContent = "🟢 GOOD"; }
-                        else if (aqi <= 100) { aqiCardEl.classList.add('aqi-card-moderate'); aqiDescEl.textContent = "🟡 MODERATE"; }
-                        else if (aqi <= 150) { aqiCardEl.classList.add('aqi-card-sensitive'); aqiDescEl.textContent = "🟠 SENSITIVE"; }
-                        else { aqiCardEl.classList.add('aqi-card-unhealthy'); aqiDescEl.textContent = "🔴 UNHEALTHY"; }
-                        
-                        showUpdateEffect('aqiCard');
-                        showUpdateEffect('weatherCard');
-                        return; 
-                    }
+                const r = await fetch(`https://api.airvisual.com/v2/city?city=Bangkok&state=Bangkok&country=Thailand&key=${IQAIR_API_KEY}`);
+                const d = await r.json();
+                if(d.status === "success") {
+                    const aqi = d.data.current.pollution.aqius;
+                    document.getElementById('aqiValue').textContent = aqi;
+                    document.getElementById('tempValue').textContent = d.data.current.weather.tp + "°C";
+                    const card = document.getElementById('aqiCard');
+                    const desc = document.getElementById('aqiDesc');
+                    card.classList.remove('aqi-card-good','aqi-card-moderate','aqi-card-sensitive','aqi-card-unhealthy');
+                    if(aqi<=50){card.classList.add('aqi-card-good');desc.textContent="GOOD";}
+                    else if(aqi<=100){card.classList.add('aqi-card-moderate');desc.textContent="MODERATE";}
+                    else if(aqi<=150){card.classList.add('aqi-card-sensitive');desc.textContent="SENSITIVE";}
+                    else {card.classList.add('aqi-card-unhealthy');desc.textContent="UNHEALTHY";}
                 }
-                throw new Error("IQAir Failed");
-            } catch (error) {
-                console.warn("Fallback Environment");
-                try {
-                    const weatherRes = await fetch('https://api.open-meteo.com/v1/forecast?latitude=13.75&longitude=100.51&current=temperature_2m');
-                    const weatherData = await weatherRes.json();
-                    document.getElementById('tempValue').textContent = `${weatherData.current.temperature_2m}°C`;
-                    document.getElementById('weatherDesc').textContent = "UPDATED (Meteo)";
-                    document.getElementById('aqiValue').textContent = `52`; 
-                    document.getElementById('aqiDesc').textContent = "🟡 MODERATE";
-                    document.getElementById('aqiCard').classList.add('aqi-card-moderate');
-                    showUpdateEffect('aqiCard');
-                    showUpdateEffect('weatherCard');
-                } catch (e) {
-                    document.getElementById('tempValue').textContent = `32°C`;
-                    document.getElementById('weatherDesc').textContent = "SIMULATED";
-                    document.getElementById('aqiValue').textContent = `52`; 
-                    document.getElementById('aqiDesc').textContent = "🟡 MODERATE";
-                    document.getElementById('aqiCard').classList.add('aqi-card-moderate');
-                }
-            }
-        }
-        
-        async function fetchOilPriceReal() {
-            if (!OIL_API_KEY || OIL_API_KEY === '') {
-                const shift = (Math.random() * 0.5) - 0.25; 
-                const oldPrice = mockOil;
-                mockOil += shift;
-                document.getElementById('oilPrice').textContent = `$${mockOil.toFixed(2)}`;
-                renderChange(mockOil, oldPrice, 'oilChange', '$');
-                showUpdateEffect('oilCard');
-                return;
+                showUpdateEffect('aqiCard'); showUpdateEffect('weatherCard');
+            } catch(e) {
+                document.getElementById('tempValue').textContent = "27°C";
+                document.getElementById('aqiValue').textContent = "89";
+                document.getElementById('aqiCard').classList.add('aqi-card-moderate');
             }
 
-            try {
-                const res = await fetch('https://api.oilpriceapi.com/v1/prices/latest?by_code=WTI_USD', {
-                    headers: { 'Authorization': `Token ${OIL_API_KEY}` }
-                });
-                if(!res.ok) throw new Error("Oil API Failed");
-                const data = await res.json();
-                const price = data.data.price;
-                
-                document.getElementById('oilPrice').textContent = `$${price.toFixed(2)}`;
-                renderChange(price, lastOilPrice, 'oilChange', '$');
-                lastOilPrice = price;
-                showUpdateEffect('oilCard');
-            } catch (error) {
-                const shift = (Math.random() * 0.5) - 0.25; 
-                const oldPrice = mockOil;
-                mockOil += shift;
-                document.getElementById('oilPrice').textContent = `$${mockOil.toFixed(2)}`;
-                renderChange(mockOil, oldPrice, 'oilChange', '$');
-                showUpdateEffect('oilCard');
-            }
+            // Mock Oil
+            const os = (Math.random()*0.1)-0.05;
+            const op = mockOil; mockOil += os;
+            document.getElementById('oilPrice').textContent = `$${mockOil.toFixed(2)}`;
+            renderChange(mockOil, op, 'oilChange', '$');
+            showUpdateEffect('oilCard');
         }
 
-        function updateAllData() {
-            fetchGoldPrice();
-            fetchBitcoin();
-            fetchExchangeRate();
-            fetchEnvironment();
-        }
-
-        updateClock();
-        setInterval(updateClock, 1000); 
-
-        updateAllData(); 
-        setInterval(updateAllData, 60000);
-
-        fetchOilPriceReal();
-        setInterval(fetchOilPriceReal, 14400000);
-
+        updateClock(); setInterval(updateClock, 1000);
+        fetchData(); setInterval(fetchData, 60000);
     </script>
 </body>
 </html>
