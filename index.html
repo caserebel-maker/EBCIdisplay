@@ -31,8 +31,8 @@
             font-family: 'Prompt', sans-serif;
             display: flex;
             flex-direction: column;
-            height: 100vh; /* บังคับความสูงเต็มจอพอดี */
-            overflow: hidden; /* ห้ามเลื่อนจอ */
+            height: 100vh; /* บังคับความสูงเต็มจอ */
+            overflow: hidden; /* ห้ามมี Scrollbar */
         }
 
         /* Animation พื้นหลังหมุน */
@@ -44,12 +44,12 @@
             height: 300vh;
             z-index: -1;
             background-image: url('Strategic-Proposal.png');
-            background-size: 100vw auto; 
+            background-size: 80vw auto; 
             background-repeat: repeat;
             background-position: center;
-            opacity: 0.25; 
+            opacity: 0.15; 
             mix-blend-mode: screen; 
-            animation: slowSpin 150s linear infinite; 
+            animation: slowSpin 180s linear infinite; 
             pointer-events: none; 
         }
 
@@ -61,72 +61,74 @@
         /* Fullscreen Button */
         .fullscreen-btn {
             position: fixed;
-            top: 15px;
-            right: 15px;
+            top: 10px;
+            right: 10px;
             z-index: 100;
             background: rgba(255, 255, 255, 0.1);
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            border-radius: 10px;
-            width: 38px;
-            height: 38px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 8px;
+            width: 34px;
+            height: 34px;
             display: flex;
             align-items: center;
             justify-content: center;
             cursor: pointer;
             backdrop-filter: blur(10px);
             color: white;
+            opacity: 0.5;
         }
 
-        /* Header & Logo */
+        /* Header & Logo - กระชับสัดส่วน */
         header {
             display: flex;
             flex-direction: column;
             align-items: center;
-            padding: 2vh 0 1vh 0;
+            padding: 1.5vh 0 0.5vh 0;
             flex-shrink: 0;
         }
 
         .main-logo {
-            width: 65%; /* ย่อขนาดโลโก้ลง */
-            max-width: 280px; 
+            width: 45%; 
+            max-width: 180px; 
             height: auto;
             object-fit: contain;
             filter: drop-shadow(0 4px 6px rgba(0,0,0,0.5)); 
         }
 
-        /* Main Container */
+        /* Main Container - จัดการกระจายพื้นที่ */
         .container {
             flex: 1;
             display: flex;
             flex-direction: column;
-            padding: 0 4vw 2vh 4vw;
-            gap: 1.5vh; /* ลด Gap ระหว่าง Section */
-            justify-content: space-between;
+            padding: 0 4vw 1.5vh 4vw;
+            gap: 0.8vh; 
+            justify-content: flex-start;
         }
 
         .section-title {
-            font-size: 0.85rem;
+            font-size: 0.7rem;
             color: var(--text-main);
-            margin: 0 0 8px 5px;
+            margin: 0 0 3px 5px;
             font-weight: 500;
             text-transform: uppercase;
             letter-spacing: 1px;
-            opacity: 0.8;
+            opacity: 0.7;
         }
 
         /* Card Layouts */
         .card-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 12px;
+            gap: 8px;
+            margin-bottom: 0.5vh;
         }
 
         .card {
             background: var(--widget-bg);
             border: 1px solid var(--widget-border);
-            border-radius: 20px; 
-            padding: 15px;
-            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+            border-radius: 18px; 
+            padding: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
             backdrop-filter: blur(20px);
             -webkit-backdrop-filter: blur(20px);
             position: relative;
@@ -136,6 +138,7 @@
             align-items: center;
             text-align: center;
             overflow: hidden;
+            min-height: 85px;
         }
 
         .card-row {
@@ -152,20 +155,17 @@
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
-            width: 60%; 
-            height: 60%;
-            opacity: 0.1; 
+            width: 45%; 
+            height: 45%;
+            opacity: 0.05; 
             z-index: 1;
-            display: flex;
-            align-items: center;
-            justify-content: center;
         }
 
         .card-icon-bg svg { width: 100%; height: 100%; }
 
         .card h3 {
             margin: 0;
-            font-size: 0.8rem;
+            font-size: 0.65rem;
             color: var(--text-muted);
             font-weight: 500;
             text-transform: uppercase;
@@ -173,97 +173,100 @@
         }
 
         .card h3.large-title {
-            font-size: 1.1rem; 
+            font-size: 0.9rem; 
             color: rgba(255, 255, 255, 0.9);
         }
 
         .card .value {
-            font-size: 1.8rem;
+            font-size: 1.4rem;
             font-weight: 600;
             line-height: 1.1;
         }
 
         .card .value.huge-value {
-            font-size: 2.4rem; 
+            font-size: 2rem; 
             font-weight: 600;
         }
 
         .card .change {
-            font-size: 0.85rem;
-            margin-top: 4px;
+            font-size: 0.7rem;
+            margin-top: 1px;
         }
 
         .sub-value {
-            font-size: 0.85rem;
+            font-size: 0.7rem;
             color: var(--text-muted);
-            margin-top: 2px;
+            margin-top: 1px;
         }
 
-        /* Clock Widget */
+        /* Clock Widget - FIXED WRAP ISSUE */
         .clock-widget {
-            background: rgba(20, 20, 20, 0.5);
+            background: rgba(20, 20, 20, 0.4);
             border: 1px solid var(--widget-border);
-            border-radius: 20px;
-            padding: 12px;
+            border-radius: 18px;
+            padding: 8px 12px;
             text-align: center;
             backdrop-filter: blur(20px);
             margin-bottom: 5px;
+            flex-shrink: 0;
+            width: 100%;
+            box-sizing: border-box;
         }
 
         .clock-widget .clock {
-            font-size: 4rem;
+            /* ใช้หน่วย vmin เพื่อให้ฟอนต์ขยายตามหน้าจอที่แคบที่สุด และสั่งไม่ให้ตัดบรรทัด */
+            font-size: clamp(2rem, 10vw, 4rem); 
             font-weight: 100; 
             color: #ffffff;
             line-height: 1;
             letter-spacing: 2px;
+            white-space: nowrap; 
+            display: block;
+            width: 100%;
+            font-variant-numeric: tabular-nums;
         }
 
         .clock-widget .date {
-            font-size: 0.9rem;
+            font-size: 0.8rem;
             color: var(--accent);
-            margin-top: 6px;
+            margin-top: 4px;
             font-weight: 500;
             text-transform: uppercase;
+            letter-spacing: 1px;
         }
 
-        /* ข่าวสาร */
-        .news-list { display: flex; flex-direction: column; gap: 8px; }
+        /* ข่าวสาร - กระชับที่สุด */
+        .news-list { display: flex; flex-direction: column; gap: 4px; }
         .news-item {
-            display: flex; gap: 10px; align-items: flex-start;
+            display: flex; gap: 8px; align-items: flex-start;
             border-bottom: 1px solid rgba(255,255,255,0.05);
-            padding-bottom: 8px; font-size: 0.95rem; line-height: 1.3; color: rgba(255,255,255,0.9);
+            padding-bottom: 4px; font-size: 0.8rem; line-height: 1.2; color: rgba(255,255,255,0.9);
         }
         .news-item:last-child { border-bottom: none; padding-bottom: 0; }
         .news-tag {
-            background: rgba(255, 255, 255, 0.1); color: #fff; padding: 2px 6px;
-            border-radius: 4px; font-size: 0.7rem; font-weight: 600;
+            background: rgba(255, 255, 255, 0.1); color: #fff; padding: 1px 4px;
+            border-radius: 4px; font-size: 0.55rem; font-weight: 600;
         }
         
         .featured-news {
-            display: flex; gap: 12px; margin-bottom: 12px;
-            padding-bottom: 12px; border-bottom: 1px solid rgba(255,255,255,0.08);
+            display: flex; gap: 10px; margin-bottom: 4px;
+            padding-bottom: 4px; border-bottom: 1px solid rgba(255,255,255,0.08);
             align-items: center;
         }
-        .featured-news-img { width: 100px; height: 70px; object-fit: cover; border-radius: 10px; flex-shrink: 0; }
-        .featured-news-title { font-size: 1rem; font-weight: 500; line-height: 1.3; margin: 0; }
+        .featured-news-img { width: 60px; height: 45px; object-fit: cover; border-radius: 6px; flex-shrink: 0; }
+        .featured-news-title { font-size: 0.8rem; font-weight: 500; line-height: 1.2; margin: 0; }
         
         .update-indicator {
-            position: absolute; top: 12px; right: 12px;
-            width: 6px; height: 6px; border-radius: 50%; background-color: var(--success);
+            position: absolute; top: 8px; right: 8px;
+            width: 4px; height: 4px; border-radius: 50%; background-color: var(--success);
             opacity: 0; transition: opacity 0.5s; z-index: 5;
         }
         .updated .update-indicator { opacity: 1; }
         
-        /* AQI States */
         .aqi-card-good { background: linear-gradient(145deg, rgba(46, 125, 50, 0.8), rgba(76, 175, 80, 0.6)) !important; }
         .aqi-card-moderate { background: linear-gradient(145deg, rgba(212, 160, 23, 0.8), rgba(234, 179, 8, 0.6)) !important; }
         .aqi-card-sensitive { background: linear-gradient(145deg, rgba(230, 81, 0, 0.8), rgba(255, 112, 67, 0.6)) !important; }
         .aqi-card-unhealthy { background: linear-gradient(145deg, rgba(185, 28, 28, 0.8), rgba(220, 38, 38, 0.6)) !important; }
-
-        .aqi-card-good h3, .aqi-card-good .value, .aqi-card-moderate h3, .aqi-card-moderate .value,
-        .aqi-card-sensitive h3, .aqi-card-sensitive .value, .aqi-card-unhealthy h3, .aqi-card-unhealthy .value {
-            color: #ffffff !important;
-        }
     </style>
 </head>
 <body>
@@ -271,7 +274,7 @@
     <div class="bg-animation-container"></div>
 
     <button class="fullscreen-btn" id="fsBtn" onclick="toggleFullScreen()" title="Toggle Fullscreen">
-        <i data-lucide="maximize-2" style="width: 20px;"></i>
+        <i data-lucide="maximize-2" style="width: 16px;"></i>
     </button>
 
     <header>
@@ -294,7 +297,7 @@
                     <div class="card-row"><h3>WEATHER</h3></div>
                     <div class="card-row">
                         <div class="value" id="tempValue">--°C</div>
-                        <div class="change neutral" id="weatherDesc" style="font-size: 0.75rem;">LOADING...</div>
+                        <div class="change neutral" id="weatherDesc">AWAITING...</div>
                     </div>
                 </div>
                 <div class="card" id="aqiCard">
@@ -303,7 +306,7 @@
                     <div class="card-row"><h3>PM2.5 (IQAIR)</h3></div>
                     <div class="card-row">
                         <div class="value" id="aqiValue">--</div>
-                        <div class="change neutral" id="aqiDesc" style="font-size: 0.75rem;">LOADING...</div>
+                        <div class="change neutral" id="aqiDesc">AWAITING...</div>
                     </div>
                 </div>
             </div>
@@ -311,48 +314,60 @@
 
         <section>
             <h2 class="section-title">MARKET UPDATES</h2>
-            <div class="card-grid" style="grid-template-rows: repeat(2, 1fr);">
+            <div class="card-grid">
                 <div class="card" id="oilCard">
                     <div class="update-indicator"></div>
                     <div class="card-icon-bg" style="color: #f43f5e;"><i data-lucide="droplet"></i></div>
                     <div class="card-row"><h3 class="large-title">OIL WTI</h3></div>
-                    <div class="card-row"><div class="value huge-value" id="oilPrice">--</div><div class="change neutral" id="oilChange">--</div></div>
+                    <div class="card-row">
+                        <div class="value huge-value" id="oilPrice">--</div>
+                        <div class="change neutral" id="oilChange">--</div>
+                    </div>
                 </div>
                 <div class="card" id="goldCard">
                     <div class="update-indicator"></div>
                     <div class="card-icon-bg" style="color: #fbbf24;"><i data-lucide="coins"></i></div>
                     <div class="card-row"><h3 class="large-title">GOLD TH</h3></div>
-                    <div class="card-row"><div class="value huge-value" id="goldPriceThb">--</div><div class="sub-value" id="goldPriceUsd">--</div></div>
+                    <div class="card-row">
+                        <div class="value huge-value" id="goldPriceThb">--</div>
+                        <div class="sub-value" id="goldPriceUsd">--</div>
+                    </div>
                 </div>
                 <div class="card" id="btcCard">
                     <div class="update-indicator"></div>
                     <div class="card-icon-bg" style="color: #f7931a;"><i data-lucide="bitcoin"></i></div>
                     <div class="card-row"><h3 class="large-title" style="color: #f7931a;">BITCOIN</h3></div>
-                    <div class="card-row"><div class="value huge-value" id="btcPrice">--</div><div class="change neutral" id="btcChange">--</div></div>
+                    <div class="card-row">
+                        <div class="value huge-value" id="btcPrice">--</div>
+                        <div class="change neutral" id="btcChange">--</div>
+                    </div>
                 </div>
                 <div class="card" id="fxCard">
                     <div class="update-indicator"></div>
                     <div class="card-icon-bg" style="color: #0a84ff;"><i data-lucide="banknote"></i></div>
                     <div class="card-row"><h3 class="large-title" style="color: #0a84ff;">USD / THB</h3></div>
-                    <div class="card-row"><div class="value huge-value" id="fxPrice">--</div><div class="change neutral" id="fxChange">--</div></div>
+                    <div class="card-row">
+                        <div class="value huge-value" id="fxPrice">--</div>
+                        <div class="change neutral" id="fxChange">--</div>
+                    </div>
                 </div>
             </div>
         </section>
 
-        <section style="margin-top: 5px;">
+        <section>
             <h2 class="section-title">ข่าวเด่นประจำวัน</h2>
-            <div class="card card-full" style="align-items: stretch; text-align: left; padding: 12px;">
+            <div class="card card-full" style="align-items: stretch; text-align: left; padding: 8px; min-height: 90px;">
                 <div class="featured-news">
-                    <img src="https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?w=200&q=80" alt="News" class="featured-news-img">
-                    <div style="display: flex; flex-direction: column; gap: 4px;">
+                    <img src="https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?w=120&q=80" alt="News" class="featured-news-img">
+                    <div style="display: flex; flex-direction: column; gap: 1px;">
                         <span class="news-tag" style="width: fit-content; background: rgba(10, 132, 255, 0.6);">TECH</span>
-                        <h4 class="featured-news-title">AI เริ่มเข้ามามีบทบาทในอุตสาหกรรมมากขึ้น ลดต้นทุนได้กว่า 20%</h4>
+                        <h4 class="featured-news-title">AI เริ่มเข้ามามีบทบาทในอุตสาหกรรมมากขึ้น</h4>
                     </div>
                 </div>
                 <div class="news-list">
                     <div class="news-item">
                         <span class="news-tag" style="background: rgba(255, 149, 0, 0.5);">ECON</span>
-                        <span>ธนาคารกลางประกาศคงอัตราดอกเบี้ยนโยบาย ส่งผลให้ค่าเงินบาททรงตัว</span>
+                        <span>ธนาคารกลางประกาศคงอัตราดอกเบี้ยนโยบาย</span>
                     </div>
                 </div>
             </div>
@@ -372,12 +387,14 @@
         }
 
         const IQAIR_API_KEY = '7c66e548-5227-458c-98b9-b0d2ac308166';
+        const OIL_API_KEY = ''; // <-- ใส่ Token จาก oilpriceapi.com ที่นี่
 
         function updateClock() {
             const now = new Date();
             const h = String(now.getHours()).padStart(2, '0');
             const m = String(now.getMinutes()).padStart(2, '0');
             const s = String(now.getSeconds()).padStart(2, '0');
+            // ใช้ Space แค่ 1 เคาะเพื่อความเสถียรของความกว้าง
             document.getElementById('timeDisplay').textContent = `${h} : ${m} : ${s}`;
             const opt = { weekday: 'short', day: 'numeric', month: 'short' };
             document.getElementById('dateDisplay').textContent = now.toLocaleDateString('en-GB', opt).toUpperCase();
@@ -388,15 +405,42 @@
             if(el) { el.classList.add('updated'); setTimeout(() => el.classList.remove('updated'), 2000); }
         }
 
-        let lastBtc = 0, lastGoldUsd = 0, lastFx = 0, mockOil = 75.17;
+        let lastBtc = 0, lastGoldUsd = 0, lastFx = 0;
+        let baseOilPrice = 75.17; // ราคาฐาน
 
         function renderChange(curr, last, id, pre = '', suf = '', rev = false) {
             const el = document.getElementById(id);
-            if (!el || last === 0) return;
+            if (!el || !last) return;
             const d = curr - last;
             if (Math.abs(d) < 0.0001) return;
             el.textContent = d > 0 ? `▲ +${pre}${d.toFixed(2)}${suf}` : `▼ -${pre}${Math.abs(d).toFixed(2)}${suf}`;
             el.className = rev ? (d > 0 ? 'change down' : 'change up') : (d > 0 ? 'change up' : 'change down');
+        }
+
+        // --- ระบบดึงราคาน้ำมันจริง ---
+        async function fetchOilReal() {
+            if (!OIL_API_KEY) return;
+            try {
+                const res = await fetch('https://api.oilpriceapi.com/v1/prices/latest?by_code=WTI_USD', {
+                    headers: { 'Authorization': `Token ${OIL_API_KEY}` }
+                });
+                const d = await res.json();
+                if(d.data && d.data.price) {
+                    baseOilPrice = d.data.price;
+                }
+            } catch(e) { console.error("Oil API Error", e); }
+        }
+
+        function updateOilUI() {
+            // จำลองการขยับเล็กน้อยทุกนาที
+            const shift = (Math.random() * 0.04) - 0.02;
+            const displayPrice = baseOilPrice + shift;
+            const el = document.getElementById('oilPrice');
+            const prevText = el.textContent.replace('$', '');
+            const prev = parseFloat(prevText) || displayPrice;
+            el.textContent = `$${displayPrice.toFixed(2)}`;
+            renderChange(displayPrice, prev, 'oilChange', '$');
+            showUpdateEffect('oilCard');
         }
 
         async function fetchData() {
@@ -412,7 +456,7 @@
                 document.getElementById('goldPriceThb').textContent = d2.response.price.gold_bar.sell;
                 showUpdateEffect('goldCard');
             } catch(e) { 
-                document.getElementById('goldPriceThb').textContent = "77,300";
+                document.getElementById('goldPriceThb').textContent = "41,500";
                 document.getElementById('goldPriceUsd').textContent = "World: $2,350.50";
             }
 
@@ -446,7 +490,7 @@
                     document.getElementById('tempValue').textContent = d.data.current.weather.tp + "°C";
                     const card = document.getElementById('aqiCard');
                     const desc = document.getElementById('aqiDesc');
-                    card.classList.remove('aqi-card-good','aqi-card-moderate','aqi-card-sensitive','aqi-card-unhealthy');
+                    card.className = 'card';
                     if(aqi<=50){card.classList.add('aqi-card-good');desc.textContent="GOOD";}
                     else if(aqi<=100){card.classList.add('aqi-card-moderate');desc.textContent="MODERATE";}
                     else if(aqi<=150){card.classList.add('aqi-card-sensitive');desc.textContent="SENSITIVE";}
@@ -454,21 +498,18 @@
                 }
                 showUpdateEffect('aqiCard'); showUpdateEffect('weatherCard');
             } catch(e) {
-                document.getElementById('tempValue').textContent = "27°C";
-                document.getElementById('aqiValue').textContent = "89";
-                document.getElementById('aqiCard').classList.add('aqi-card-moderate');
+                document.getElementById('tempValue').textContent = "32°C";
+                document.getElementById('aqiValue').textContent = "75";
+                document.getElementById('aqiCard').className = 'card aqi-card-moderate';
+                document.getElementById('aqiDesc').textContent = "MODERATE";
             }
 
-            // Mock Oil
-            const os = (Math.random()*0.1)-0.05;
-            const op = mockOil; mockOil += os;
-            document.getElementById('oilPrice').textContent = `$${mockOil.toFixed(2)}`;
-            renderChange(mockOil, op, 'oilChange', '$');
-            showUpdateEffect('oilCard');
+            updateOilUI();
         }
 
         updateClock(); setInterval(updateClock, 1000);
         fetchData(); setInterval(fetchData, 60000);
+        fetchOilReal(); setInterval(fetchOilReal, 14400000); // 4 ชม. ครั้ง
     </script>
 </body>
 </html>
