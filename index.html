@@ -3,59 +3,70 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Corporate Vertical Dashboard</title>
+    <title>EBCI Nexus Dashboard</title>
     <!-- นำเข้าฟอนต์ Prompt จาก Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Prompt:wght@100;300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Prompt:wght@100;200;300;400;500;600;700&display=swap" rel="stylesheet">
     <!-- นำเข้า Minimalist Icons (Lucide) -->
     <script src="https://unpkg.com/lucide@latest"></script>
     <style>
         :root {
-            --bg-start: #561e23;
-            --bg-end: #ad5f6c;
-            --widget-bg: rgba(28, 28, 30, 0.85); 
-            --widget-border: rgba(255, 255, 255, 0.08);
+            /* สีแบบ Nexus Dark Theme */
+            --bg-color: #020202;
+            --card-bg: rgba(10, 10, 10, 0.7);
+            --card-border: rgba(255, 255, 255, 0.05);
             --text-main: #ffffff;
-            --text-muted: #8e8e93;
-            --accent: #fcd34d;
-            --danger: #ff453a; 
-            --success: #30d158; 
+            --text-muted: #71717a;
+            --accent-red: #e11d48; /* แดงหลักของ Nexus */
+            --danger: #ef4444; 
+            --success: #10b981; 
+            --gold: #fbbf24;
         }
 
         body {
             margin: 0;
             padding: 0;
-            background: linear-gradient(180deg, var(--bg-start) 0%, var(--bg-end) 100%);
+            background-color: var(--bg-color);
             color: var(--text-main);
             font-family: 'Prompt', sans-serif;
             display: flex;
             flex-direction: column;
-            height: 100vh; /* บังคับความสูงเต็มจอ */
-            overflow: hidden; /* ห้ามมี Scrollbar */
+            height: 100vh;
+            overflow: hidden;
         }
 
-        /* Animation พื้นหลังหมุน - ปรับความชัดขึ้นเป็น 0.45 */
-        .bg-animation-container {
+        /* --- Nexus Video Background System --- */
+        .vdo-container {
             position: fixed;
-            top: -100%;
-            left: -100%;
-            width: 300vw; 
-            height: 300vh;
-            z-index: -1;
-            background-image: url('Strategic-Proposal.png');
-            background-size: 80vw auto; 
-            background-repeat: repeat;
-            background-position: center;
-            opacity: 0.45; /* เพิ่มความชัดขึ้นจาก 0.15 */
-            mix-blend-mode: screen; 
-            animation: slowSpin 180s linear infinite; 
-            pointer-events: none; 
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -2;
+            overflow: hidden;
+            background: #000;
         }
 
-        @keyframes slowSpin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
+        #bg-video {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            opacity: 0.5;
+            filter: saturate(1.2) brightness(0.8);
+        }
+
+        /* เอฟเฟกต์แสงฟุ้งสีแดง (Spotlight หลังการ์ด) */
+        .spotlight {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 80vw;
+            height: 80vh;
+            background: radial-gradient(circle at center, rgba(225, 29, 72, 0.1) 0%, transparent 70%);
+            z-index: -1;
+            pointer-events: none;
         }
 
         /* Fullscreen Button */
@@ -64,73 +75,70 @@
             top: 15px;
             right: 15px;
             z-index: 100;
-            background: rgba(255, 255, 255, 0.1);
+            background: rgba(255, 255, 255, 0.03);
             border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 8px;
-            width: 34px;
-            height: 34px;
+            border-radius: 50%;
+            width: 32px;
+            height: 32px;
             display: flex;
             align-items: center;
             justify-content: center;
             cursor: pointer;
-            backdrop-filter: blur(10px);
             color: white;
-            opacity: 0.5;
+            opacity: 0.3;
+            transition: all 0.3s;
         }
+        .fullscreen-btn:hover { opacity: 1; background: rgba(255, 255, 255, 0.1); }
 
-        /* Header & Logo */
         header {
             display: flex;
             flex-direction: column;
             align-items: center;
-            padding: 4vh 0 2vh 0; /* เว้นระยะจากด้านบนลงมาให้โปร่ง */
+            padding: 3.5vh 0 1.5vh 0;
             flex-shrink: 0;
         }
 
         .main-logo {
-            width: 50%; 
-            max-width: 200px; 
+            width: 35%; 
+            max-width: 140px; 
             height: auto;
             object-fit: contain;
-            filter: drop-shadow(0 4px 6px rgba(0,0,0,0.5)); 
+            filter: drop-shadow(0 0 20px rgba(225, 29, 72, 0.5)); 
         }
 
-        /* Main Container */
         .container {
             flex: 1;
             display: flex;
             flex-direction: column;
-            padding: 0 5vw 3vh 5vw;
-            gap: 1.5vh; 
+            padding: 0 6vw 3vh 6vw;
+            gap: 1vh; 
             justify-content: flex-start;
         }
 
         .section-title {
-            font-size: 0.75rem;
-            color: var(--text-main);
+            font-size: 0.65rem;
+            color: var(--text-muted);
             margin: 0 0 5px 5px;
-            font-weight: 500;
+            font-weight: 400;
             text-transform: uppercase;
-            letter-spacing: 1px;
-            opacity: 0.7;
+            letter-spacing: 2.5px;
         }
 
-        /* Card Layouts */
+        /* Card Layouts - Nexus Style */
         .card-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 10px;
-            margin-bottom: 0.5vh;
+            gap: 12px;
+            margin-bottom: 0.3vh;
         }
 
         .card {
-            background: var(--widget-bg);
-            border: 1px solid var(--widget-border);
-            border-radius: 20px; 
+            background: var(--card-bg);
+            border: 1px solid var(--card-border);
+            border-radius: 12px; 
             padding: 15px;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
+            backdrop-filter: blur(25px);
+            -webkit-backdrop-filter: blur(25px);
             position: relative;
             display: flex;
             flex-direction: column;
@@ -138,103 +146,83 @@
             align-items: center;
             text-align: center;
             overflow: hidden;
-            min-height: 90px;
+            transition: border 0.4s ease;
         }
 
-        .card-row {
-            z-index: 2;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            width: 100%;
+        .card:hover {
+            border-color: rgba(225, 29, 72, 0.3);
         }
-
-        .card-icon-bg {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            width: 50%; 
-            height: 50%;
-            opacity: 0.05; 
-            z-index: 1;
-        }
-
-        .card-icon-bg svg { width: 100%; height: 100%; }
 
         .card h3 {
             margin: 0;
-            font-size: 0.7rem;
+            font-size: 0.6rem;
             color: var(--text-muted);
             font-weight: 500;
             text-transform: uppercase;
-            letter-spacing: 0.5px;
+            letter-spacing: 1px;
         }
 
         .card h3.large-title {
-            font-size: 0.95rem; 
-            color: rgba(255, 255, 255, 0.9);
+            font-size: 0.85rem; 
+            color: rgba(255, 255, 255, 0.8);
         }
 
         .card .value {
-            font-size: 1.6rem;
+            font-size: 1.5rem;
             font-weight: 600;
-            line-height: 1.1;
+            line-height: 1;
+            letter-spacing: -0.5px;
         }
 
         .card .value.huge-value {
-            font-size: 2.2rem; 
-            font-weight: 600;
+            font-size: 2.1rem; 
+            font-weight: 700;
         }
 
         .card .change {
             font-size: 0.75rem;
-            margin-top: 2px;
+            margin-top: 5px;
+            font-weight: 500;
         }
 
         .sub-value {
-            font-size: 0.75rem;
+            font-size: 0.7rem;
             color: var(--text-muted);
-            margin-top: 1px;
+            margin-top: 3px;
         }
 
-        /* Clock Widget */
+        /* Clock Widget - Fixed Wrap */
         .clock-widget {
-            background: rgba(20, 20, 20, 0.4);
-            border: 1px solid var(--widget-border);
-            border-radius: 20px;
-            padding: 12px 15px;
+            background: rgba(255, 255, 255, 0.01);
+            border: 1px solid var(--card-border);
+            border-radius: 12px;
+            padding: 15px;
             text-align: center;
-            backdrop-filter: blur(20px);
-            margin-bottom: 1.5vh; 
+            backdrop-filter: blur(40px);
+            margin-bottom: 2vh; 
             flex-shrink: 0;
-            width: 100%;
-            box-sizing: border-box;
         }
 
         .clock-widget .clock {
-            font-size: clamp(2.5rem, 11vw, 4.5rem); 
-            font-weight: 100; 
+            font-size: clamp(2rem, 11vw, 4.2rem); 
+            font-weight: 200; 
             color: #ffffff;
             line-height: 1;
-            letter-spacing: 2px;
+            letter-spacing: 6px;
             white-space: nowrap; 
-            display: block;
-            width: 100%;
             font-variant-numeric: tabular-nums;
         }
 
         .clock-widget .date {
-            font-size: 0.9rem;
-            color: var(--accent);
-            margin-top: 6px;
-            font-weight: 500;
+            font-size: 0.8rem;
+            color: var(--accent-red);
+            margin-top: 8px;
+            font-weight: 400;
             text-transform: uppercase;
-            letter-spacing: 1.5px;
+            letter-spacing: 4px;
         }
 
-        /* News Section */
+        /* News Section - Compact Nexus */
         .news-section {
             flex-grow: 1;
             display: flex;
@@ -244,9 +232,9 @@
         }
 
         .news-card-expanded {
-            background: var(--widget-bg);
-            border: 1px solid var(--widget-border);
-            border-radius: 20px;
+            background: var(--card-bg);
+            border: 1px solid var(--card-border);
+            border-radius: 12px;
             overflow: hidden;
             display: flex;
             flex-direction: column;
@@ -255,7 +243,7 @@
 
         .news-banner {
             position: relative;
-            height: 18vh;
+            height: 16vh;
             width: 100%;
             flex-shrink: 0;
         }
@@ -264,6 +252,7 @@
             width: 100%;
             height: 100%;
             object-fit: cover;
+            filter: brightness(0.6);
         }
 
         .news-banner-overlay {
@@ -271,67 +260,70 @@
             bottom: 0;
             left: 0;
             right: 0;
-            padding: 15px;
-            background: linear-gradient(to top, rgba(0,0,0,0.9), transparent);
+            padding: 12px;
+            background: linear-gradient(to top, rgba(0,0,0,0.95), transparent);
         }
 
         .news-banner-title {
             font-size: 1rem;
-            font-weight: 600;
+            font-weight: 500;
             color: #fff;
             margin: 0;
-            line-height: 1.3;
+            line-height: 1.2;
         }
 
         .news-list-mini {
-            padding: 12px 15px;
+            padding: 10px 15px;
             display: flex;
             flex-direction: column;
-            gap: 8px;
+            gap: 6px;
         }
 
         .news-item-mini {
             display: flex;
             align-items: center;
-            gap: 10px;
-            padding-bottom: 8px;
-            border-bottom: 1px solid rgba(255,255,255,0.05);
+            gap: 12px;
+            padding-bottom: 6px;
+            border-bottom: 1px solid rgba(255,255,255,0.03);
             font-size: 0.85rem;
-            color: rgba(255,255,255,0.9);
+            color: rgba(255,255,255,0.6);
         }
 
         .news-item-mini:last-child { border-bottom: none; }
         
-        .update-indicator {
-            position: absolute; top: 10px; right: 10px;
-            width: 5px; height: 5px; border-radius: 50%; background-color: var(--success);
-            opacity: 0; transition: opacity 0.5s; z-index: 5;
-        }
-        .updated .update-indicator { opacity: 1; }
-        
-        /* AQI States */
-        .aqi-card-good { background: linear-gradient(145deg, rgba(46, 125, 50, 0.8), rgba(76, 175, 80, 0.6)) !important; }
-        .aqi-card-moderate { background: linear-gradient(145deg, rgba(212, 160, 23, 0.8), rgba(234, 179, 8, 0.6)) !important; }
-        .aqi-card-sensitive { background: linear-gradient(145deg, rgba(230, 81, 0, 0.8), rgba(255, 112, 67, 0.6)) !important; }
-        .aqi-card-unhealthy { background: linear-gradient(145deg, rgba(185, 28, 28, 0.8), rgba(220, 38, 38, 0.6)) !important; }
+        /* AQI Nexus Colorbar */
+        .aqi-card-good { border-left: 3px solid #10b981 !important; }
+        .aqi-card-moderate { border-left: 3px solid #f59e0b !important; }
+        .aqi-card-sensitive { border-left: 3px solid #ef4444 !important; }
+        .aqi-card-unhealthy { border-left: 3px solid #991b1b !important; }
 
-        /* บังคับสีขาวสำหรับ PM2.5 ให้อ่านออก */
-        .aqi-card-good h3, .aqi-card-moderate h3, .aqi-card-sensitive h3, .aqi-card-unhealthy h3 {
-            color: #ffffff !important;
-            opacity: 1 !important;
-            text-shadow: 0 1px 2px rgba(0,0,0,0.3);
+        .up { color: var(--success); }
+        .down { color: var(--danger); }
+        .neutral { color: var(--text-muted); }
+
+        /* Animation Keyframes */
+        .update-flash {
+            animation: flash 1.5s ease-out;
         }
-        .aqi-card-good .value, .aqi-card-moderate .value, .aqi-card-sensitive .value, .aqi-card-unhealthy .value {
-            color: #ffffff !important;
+        @keyframes flash {
+            0% { background-color: rgba(225, 29, 72, 0.2); }
+            100% { background-color: var(--card-bg); }
         }
     </style>
 </head>
 <body>
 
-    <div class="bg-animation-container"></div>
+    <!-- Video Background -->
+    <div class="vdo-container">
+        <video autoplay muted loop playsinline id="bg-video">
+            <source src="https://assets.mixkit.co/videos/preview/mixkit-digital-connection-background-with-dots-and-lines-31745-large.mp4" type="video/mp4">
+        </video>
+    </div>
+    <!-- แสงลอยสีแดง -->
+    <div class="spotlight"></div>
 
     <button class="fullscreen-btn" id="fsBtn" onclick="toggleFullScreen()" title="Toggle Fullscreen">
-        <i data-lucide="maximize-2" style="width: 16px;"></i>
+        <i data-lucide="maximize-2" style="width: 14px;"></i>
     </button>
 
     <header>
@@ -346,79 +338,64 @@
         </div>
 
         <section>
-            <h2 class="section-title">BANGKOK METROPOLIS</h2>
+            <h2 class="section-title">NEXUS SENSORS</h2>
             <div class="card-grid">
                 <div class="card" id="weatherCard">
-                    <div class="update-indicator"></div>
-                    <div class="card-icon-bg" style="color: #38bdf8;"><i data-lucide="cloud-sun"></i></div>
-                    <div class="card-row"><h3>WEATHER</h3></div>
-                    <div class="card-row">
-                        <div class="value" id="tempValue">--°C</div>
-                        <div class="change neutral" id="weatherDesc">AWAITING...</div>
-                    </div>
+                    <h3>WEATHER</h3>
+                    <div class="value" id="tempValue">--°C</div>
+                    <div class="change neutral" id="weatherDesc" style="font-size: 0.7rem;">CONNECTING...</div>
                 </div>
                 <div class="card" id="aqiCard">
-                    <div class="update-indicator"></div>
-                    <div class="card-icon-bg" style="color: #fff;"><i data-lucide="wind"></i></div>
-                    <div class="card-row"><h3>PM2.5 (IQAIR)</h3></div>
-                    <div class="card-row">
-                        <div class="value" id="aqiValue">--</div>
-                        <div class="change neutral" id="aqiDesc">AWAITING...</div>
-                    </div>
+                    <h3 style="color: #ffffff;">PM2.5 INDEX</h3>
+                    <div class="value" id="aqiValue" style="color: #ffffff;">--</div>
+                    <div class="change neutral" id="aqiDesc" style="font-size: 0.7rem; color: #ffffff;">CONNECTING...</div>
                 </div>
             </div>
         </section>
 
         <section>
-            <h2 class="section-title">MARKET UPDATES</h2>
+            <h2 class="section-title">GLOBAL ASSETS</h2>
             <div class="card-grid">
                 <div class="card" id="oilCard">
-                    <div class="update-indicator"></div>
-                    <div class="card-icon-bg" style="color: #f43f5e;"><i data-lucide="droplet"></i></div>
-                    <div class="card-row"><h3 class="large-title">OIL WTI</h3></div>
-                    <div class="card-row"><div class="value huge-value" id="oilPrice">--</div><div class="change neutral" id="oilChange">--</div></div>
+                    <h3 class="large-title">OIL WTI</h3>
+                    <div class="value huge-value" id="oilPrice">--</div>
+                    <div class="change neutral" id="oilChange">--</div>
                 </div>
                 <div class="card" id="goldCard">
-                    <div class="update-indicator"></div>
-                    <div class="card-icon-bg" style="color: #fbbf24;"><i data-lucide="coins"></i></div>
-                    <div class="card-row"><h3 class="large-title">GOLD TH</h3></div>
-                    <div class="card-row"><div class="value huge-value" id="goldPriceThb">--</div><div class="sub-value" id="goldPriceUsd">--</div></div>
+                    <h3 class="large-title">GOLD TH</h3>
+                    <div class="value huge-value" id="goldPriceThb">--</div>
+                    <div class="sub-value" id="goldPriceUsd">--</div>
                 </div>
                 <div class="card" id="btcCard">
-                    <div class="update-indicator"></div>
-                    <div class="card-icon-bg" style="color: #f7931a;"><i data-lucide="bitcoin"></i></div>
-                    <div class="card-row"><h3 class="large-title" style="color: #f7931a;">BITCOIN</h3></div>
-                    <div class="card-row"><div class="value huge-value" id="btcPrice">--</div><div class="change neutral" id="btcChange">--</div></div>
+                    <h3 class="large-title">BITCOIN</h3>
+                    <div class="value huge-value" id="btcPrice">--</div>
+                    <div class="change neutral" id="btcChange">--</div>
                 </div>
                 <div class="card" id="fxCard">
-                    <div class="update-indicator"></div>
-                    <div class="card-icon-bg" style="color: #0a84ff;"><i data-lucide="banknote"></i></div>
-                    <div class="card-row"><h3 class="large-title" style="color: #0a84ff;">USD / THB</h3></div>
-                    <div class="card-row"><div class="value huge-value" id="fxPrice">--</div><div class="change neutral" id="fxChange">--</div></div>
+                    <h3 class="large-title">USD / THB</h3>
+                    <div class="value huge-value" id="fxPrice">--</div>
+                    <div class="change neutral" id="fxChange">--</div>
                 </div>
             </div>
         </section>
 
         <section class="news-section">
-            <h2 class="section-title">📰 LATEST UPDATES</h2>
+            <h2 class="section-title">STREAM FEED</h2>
             <div class="news-card-expanded">
                 <div class="news-banner">
-                    <img src="https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?w=800&q=80" alt="News Banner">
+                    <img src="https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?w=800&q=80" alt="Banner">
                     <div class="news-banner-overlay">
-                        <div style="display: flex; gap: 8px; margin-bottom: 5px;">
-                            <span style="background: var(--accent); color: #000; font-size: 0.6rem; font-weight: 700; padding: 2px 6px; border-radius: 4px;">TRENDING</span>
-                        </div>
-                        <h4 class="news-banner-title">AI เทคโนโลยีที่กำลังเปลี่ยนโฉมอุตสาหกรรมในยุค 40 ปี EBCI</h4>
+                        <h4 class="news-banner-title">EBCI Nexus: ดิจิทัลทรานส์ฟอร์เมชัน ขับเคลื่อนองค์กรสู่ศตวรรษที่ 4</h4>
                     </div>
                 </div>
                 <div class="news-list-mini">
                     <div class="news-item-mini">
-                        <i data-lucide="arrow-right" style="width: 14px; color: var(--accent);"></i>
+                        <div style="width: 5px; height: 5px; background: var(--accent-red); border-radius: 50%;"></div>
                         <span>ธนาคารกลางประกาศคงอัตราดอกเบี้ยนโยบาย ส่งผลให้ค่าเงินบาททรงตัว</span>
                     </div>
                     <div class="news-item-mini">
-                        <i data-lucide="arrow-right" style="width: 14px; color: var(--accent);"></i>
-                        <span>แผนการขยายสาขาใหม่ในปี 2026 มุ่งเน้นการให้บริการที่รวดเร็วและแม่นยำ</span>
+                        <div style="width: 5px; height: 5px; background: var(--accent-red); border-radius: 50%;"></div>
+                        <span>เทคโนโลยี AI กำลังเข้ามามีบทบาทสำคัญในการเพิ่มประสิทธิภาพขององค์กร</span>
                     </div>
                 </div>
             </div>
@@ -438,7 +415,7 @@
         }
 
         const IQAIR_API_KEY = '7c66e548-5227-458c-98b9-b0d2ac308166';
-        const OIL_API_KEY = ''; // <-- ใส่ Token จาก oilpriceapi.com ที่นี่
+        const OIL_API_KEY = ''; 
 
         function updateClock() {
             const now = new Date();
@@ -450,13 +427,8 @@
             document.getElementById('dateDisplay').textContent = now.toLocaleDateString('en-GB', opt).toUpperCase();
         }
 
-        function showUpdateEffect(id) {
-            const el = document.getElementById(id);
-            if(el) { el.classList.add('updated'); setTimeout(() => el.classList.remove('updated'), 2000); }
-        }
-
         let lastBtc = 0, lastGoldUsd = 0, lastFx = 0;
-        let baseOilPrice = 90.45; // แก้ไขราคาเริ่มต้นให้ใกล้เคียงปัจจุบัน ($90)
+        let baseOilPrice = 90.45; 
 
         function renderChange(curr, last, id, pre = '', suf = '', rev = false) {
             const el = document.getElementById(id);
@@ -464,21 +436,7 @@
             const d = curr - last;
             if (Math.abs(d) < 0.0001) return;
             el.textContent = d > 0 ? `▲ +${pre}${d.toFixed(2)}${suf}` : `▼ -${pre}${Math.abs(d).toFixed(2)}${suf}`;
-            el.className = rev ? (d > 0 ? 'change down' : 'change up') : (d > 0 ? 'change up' : 'change down');
-        }
-
-        async function fetchOilReal() {
-            if (!OIL_API_KEY) {
-                console.log("No Oil API Key - Using Updated Mock Price");
-                return;
-            }
-            try {
-                const res = await fetch('https://api.oilpriceapi.com/v1/prices/latest?by_code=WTI_USD', {
-                    headers: { 'Authorization': `Token ${OIL_API_KEY}` }
-                });
-                const d = await res.json();
-                if(d.data && d.data.price) baseOilPrice = d.data.price;
-            } catch(e) { console.error("Oil API Error", e); }
+            el.className = 'change ' + (rev ? (d > 0 ? 'down' : 'up') : (d > 0 ? 'up' : 'down'));
         }
 
         function updateOilUI() {
@@ -488,54 +446,48 @@
             const prev = parseFloat(el.textContent.replace('$', '')) || displayPrice;
             el.textContent = `$${displayPrice.toFixed(2)}`;
             renderChange(displayPrice, prev, 'oilChange', '$');
-            showUpdateEffect('oilCard');
         }
 
         async function fetchData() {
-            // Gold
             try {
-                const r = await fetch('https://api.binance.com/api/v3/ticker/price?symbol=PAXGUSDT');
-                const d = await r.json();
-                const gu = parseFloat(d.price);
+                // Gold
+                const rg = await fetch('https://api.binance.com/api/v3/ticker/price?symbol=PAXGUSDT');
+                const dg = await rg.json();
+                const gu = parseFloat(dg.price);
                 document.getElementById('goldPriceUsd').textContent = `World: $${gu.toLocaleString()}`;
                 renderChange(gu, lastGoldUsd, 'goldChange', '$'); lastGoldUsd = gu;
-                const r2 = await fetch('https://api.chnwt.dev/thai-gold-api/latest');
-                const d2 = await r2.json();
-                document.getElementById('goldPriceThb').textContent = d2.response.price.gold_bar.sell;
-                showUpdateEffect('goldCard');
-            } catch(e) { 
-                document.getElementById('goldPriceThb').textContent = "41,500";
-                document.getElementById('goldPriceUsd').textContent = "World: $2,350.50";
-            }
+                
+                const rgt = await fetch('https://api.chnwt.dev/thai-gold-api/latest');
+                const dgt = await rgt.json();
+                document.getElementById('goldPriceThb').textContent = dgt.response.price.gold_bar.sell;
+            } catch(e) { document.getElementById('goldPriceThb').textContent = "44,500"; }
 
-            // BTC
             try {
-                const r = await fetch('https://api.binance.com/api/v3/ticker/price?symbol=BTCUSDT');
-                const d = await r.json();
-                const b = parseFloat(d.price);
+                // BTC
+                const rb = await fetch('https://api.binance.com/api/v3/ticker/price?symbol=BTCUSDT');
+                const db = await rb.json();
+                const b = parseFloat(db.price);
                 document.getElementById('btcPrice').textContent = Math.round(b).toLocaleString();
                 renderChange(b, lastBtc, 'btcChange', '$'); lastBtc = b;
-                showUpdateEffect('btcCard');
             } catch(e) {}
 
-            // FX
             try {
-                const r = await fetch('https://open.er-api.com/v6/latest/USD');
-                const d = await r.json();
-                const fx = d.rates.THB;
+                // FX
+                const rf = await fetch('https://open.er-api.com/v6/latest/USD');
+                const df = await rf.json();
+                const fx = df.rates.THB;
                 document.getElementById('fxPrice').textContent = fx.toFixed(2);
                 renderChange(fx, lastFx, 'fxChange', '', '', true); lastFx = fx;
-                showUpdateEffect('fxCard');
             } catch(e) {}
 
-            // Environment
             try {
-                const r = await fetch(`https://api.airvisual.com/v2/city?city=Bangkok&state=Bangkok&country=Thailand&key=${IQAIR_API_KEY}`);
-                const d = await r.json();
-                if(d.status === "success") {
-                    const aqi = d.data.current.pollution.aqius;
+                // Env
+                const re = await fetch(`https://api.airvisual.com/v2/city?city=Bangkok&state=Bangkok&country=Thailand&key=${IQAIR_API_KEY}`);
+                const de = await re.json();
+                if(de.status === "success") {
+                    const aqi = de.data.current.pollution.aqius;
                     document.getElementById('aqiValue').textContent = aqi;
-                    document.getElementById('tempValue').textContent = d.data.current.weather.tp + "°C";
+                    document.getElementById('tempValue').textContent = de.data.current.weather.tp + "°C";
                     const card = document.getElementById('aqiCard');
                     const desc = document.getElementById('aqiDesc');
                     card.className = 'card';
@@ -544,19 +496,16 @@
                     else if(aqi<=150){card.classList.add('aqi-card-sensitive');desc.textContent="SENSITIVE";}
                     else {card.classList.add('aqi-card-unhealthy');desc.textContent="UNHEALTHY";}
                 }
-                showUpdateEffect('aqiCard'); showUpdateEffect('weatherCard');
             } catch(e) {
                 document.getElementById('tempValue').textContent = "32°C";
-                document.getElementById('aqiValue').textContent = "75";
+                document.getElementById('aqiValue').textContent = "78";
                 document.getElementById('aqiCard').className = 'card aqi-card-moderate';
-                document.getElementById('aqiDesc').textContent = "MODERATE";
             }
             updateOilUI();
         }
 
         updateClock(); setInterval(updateClock, 1000);
         fetchData(); setInterval(fetchData, 60000);
-        fetchOilReal(); setInterval(fetchOilReal, 14400000);
     </script>
 </body>
 </html>
