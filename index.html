@@ -78,12 +78,12 @@
             opacity: 0.5;
         }
 
-        /* Header & Logo - เพิ่มระยะให้โปร่งขึ้น */
+        /* Header & Logo */
         header {
             display: flex;
             flex-direction: column;
             align-items: center;
-            padding: 4vh 0 2vh 0; /* เพิ่มพื้นที่รอบโลโก้ */
+            padding: 4vh 0 2vh 0; /* เว้นระยะจากด้านบนลงมาให้โปร่ง */
             flex-shrink: 0;
         }
 
@@ -199,7 +199,7 @@
             margin-top: 1px;
         }
 
-        /* Clock Widget - เว้นระยะลงมาเพิ่ม */
+        /* Clock Widget */
         .clock-widget {
             background: rgba(20, 20, 20, 0.4);
             border: 1px solid var(--widget-border);
@@ -207,7 +207,7 @@
             padding: 12px 15px;
             text-align: center;
             backdrop-filter: blur(20px);
-            margin-bottom: 1.5vh; /* เพิ่มช่องว่างจากโลโก้ */
+            margin-bottom: 1.5vh; 
             flex-shrink: 0;
             width: 100%;
             box-sizing: border-box;
@@ -234,9 +234,9 @@
             letter-spacing: 1.5px;
         }
 
-        /* New Expanded News Section */
+        /* News Section */
         .news-section {
-            flex-grow: 1; /* ขยายให้เต็มพื้นที่ที่เหลือ */
+            flex-grow: 1;
             display: flex;
             flex-direction: column;
             gap: 10px;
@@ -309,13 +309,13 @@
         }
         .updated .update-indicator { opacity: 1; }
         
-        /* AQI States - ปรับปรุงสีหัวข้อให้อ่านง่าย */
+        /* AQI States */
         .aqi-card-good { background: linear-gradient(145deg, rgba(46, 125, 50, 0.8), rgba(76, 175, 80, 0.6)) !important; }
         .aqi-card-moderate { background: linear-gradient(145deg, rgba(212, 160, 23, 0.8), rgba(234, 179, 8, 0.6)) !important; }
         .aqi-card-sensitive { background: linear-gradient(145deg, rgba(230, 81, 0, 0.8), rgba(255, 112, 67, 0.6)) !important; }
         .aqi-card-unhealthy { background: linear-gradient(145deg, rgba(185, 28, 28, 0.8), rgba(220, 38, 38, 0.6)) !important; }
 
-        /* บังคับสีขาวสำหรับการ์ดที่มีพื้นหลังสีสว่าง */
+        /* บังคับสีขาวสำหรับ PM2.5 ให้อ่านออก */
         .aqi-card-good h3, .aqi-card-moderate h3, .aqi-card-sensitive h3, .aqi-card-unhealthy h3 {
             color: #ffffff !important;
             opacity: 1 !important;
@@ -438,7 +438,7 @@
         }
 
         const IQAIR_API_KEY = '7c66e548-5227-458c-98b9-b0d2ac308166';
-        const OIL_API_KEY = ''; 
+        const OIL_API_KEY = ''; // <-- ใส่ Token จาก oilpriceapi.com ที่นี่
 
         function updateClock() {
             const now = new Date();
@@ -456,7 +456,7 @@
         }
 
         let lastBtc = 0, lastGoldUsd = 0, lastFx = 0;
-        let baseOilPrice = 75.17; 
+        let baseOilPrice = 90.45; // แก้ไขราคาเริ่มต้นให้ใกล้เคียงปัจจุบัน ($90)
 
         function renderChange(curr, last, id, pre = '', suf = '', rev = false) {
             const el = document.getElementById(id);
@@ -468,7 +468,10 @@
         }
 
         async function fetchOilReal() {
-            if (!OIL_API_KEY) return;
+            if (!OIL_API_KEY) {
+                console.log("No Oil API Key - Using Updated Mock Price");
+                return;
+            }
             try {
                 const res = await fetch('https://api.oilpriceapi.com/v1/prices/latest?by_code=WTI_USD', {
                     headers: { 'Authorization': `Token ${OIL_API_KEY}` }
