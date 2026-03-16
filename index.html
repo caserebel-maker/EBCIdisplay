@@ -61,8 +61,8 @@
         /* Fullscreen Button */
         .fullscreen-btn {
             position: fixed;
-            top: 10px;
-            right: 10px;
+            top: 15px;
+            right: 15px;
             z-index: 100;
             background: rgba(255, 255, 255, 0.1);
             border: 1px solid rgba(255, 255, 255, 0.1);
@@ -78,37 +78,37 @@
             opacity: 0.5;
         }
 
-        /* Header & Logo - กระชับสัดส่วน */
+        /* Header & Logo - เพิ่มระยะให้โปร่งขึ้น */
         header {
             display: flex;
             flex-direction: column;
             align-items: center;
-            padding: 1.5vh 0 0.5vh 0;
+            padding: 4vh 0 2vh 0; /* เพิ่มพื้นที่รอบโลโก้ */
             flex-shrink: 0;
         }
 
         .main-logo {
-            width: 45%; 
-            max-width: 180px; 
+            width: 50%; 
+            max-width: 200px; 
             height: auto;
             object-fit: contain;
             filter: drop-shadow(0 4px 6px rgba(0,0,0,0.5)); 
         }
 
-        /* Main Container - จัดการกระจายพื้นที่ */
+        /* Main Container */
         .container {
             flex: 1;
             display: flex;
             flex-direction: column;
-            padding: 0 4vw 1.5vh 4vw;
-            gap: 0.8vh; 
+            padding: 0 5vw 3vh 5vw;
+            gap: 1.5vh; 
             justify-content: flex-start;
         }
 
         .section-title {
-            font-size: 0.7rem;
+            font-size: 0.75rem;
             color: var(--text-main);
-            margin: 0 0 3px 5px;
+            margin: 0 0 5px 5px;
             font-weight: 500;
             text-transform: uppercase;
             letter-spacing: 1px;
@@ -119,16 +119,16 @@
         .card-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 8px;
+            gap: 10px;
             margin-bottom: 0.5vh;
         }
 
         .card {
             background: var(--widget-bg);
             border: 1px solid var(--widget-border);
-            border-radius: 18px; 
-            padding: 10px;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+            border-radius: 20px; 
+            padding: 15px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
             backdrop-filter: blur(20px);
             -webkit-backdrop-filter: blur(20px);
             position: relative;
@@ -138,7 +138,7 @@
             align-items: center;
             text-align: center;
             overflow: hidden;
-            min-height: 85px;
+            min-height: 90px;
         }
 
         .card-row {
@@ -155,8 +155,8 @@
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
-            width: 45%; 
-            height: 45%;
+            width: 50%; 
+            height: 50%;
             opacity: 0.05; 
             z-index: 1;
         }
@@ -165,7 +165,7 @@
 
         .card h3 {
             margin: 0;
-            font-size: 0.65rem;
+            font-size: 0.7rem;
             color: var(--text-muted);
             font-weight: 500;
             text-transform: uppercase;
@@ -173,49 +173,48 @@
         }
 
         .card h3.large-title {
-            font-size: 0.9rem; 
+            font-size: 0.95rem; 
             color: rgba(255, 255, 255, 0.9);
         }
 
         .card .value {
-            font-size: 1.4rem;
+            font-size: 1.6rem;
             font-weight: 600;
             line-height: 1.1;
         }
 
         .card .value.huge-value {
-            font-size: 2rem; 
+            font-size: 2.2rem; 
             font-weight: 600;
         }
 
         .card .change {
-            font-size: 0.7rem;
-            margin-top: 1px;
+            font-size: 0.75rem;
+            margin-top: 2px;
         }
 
         .sub-value {
-            font-size: 0.7rem;
+            font-size: 0.75rem;
             color: var(--text-muted);
             margin-top: 1px;
         }
 
-        /* Clock Widget - FIXED WRAP ISSUE */
+        /* Clock Widget - เว้นระยะลงมาเพิ่ม */
         .clock-widget {
             background: rgba(20, 20, 20, 0.4);
             border: 1px solid var(--widget-border);
-            border-radius: 18px;
-            padding: 8px 12px;
+            border-radius: 20px;
+            padding: 12px 15px;
             text-align: center;
             backdrop-filter: blur(20px);
-            margin-bottom: 5px;
+            margin-bottom: 1.5vh; /* เพิ่มช่องว่างจากโลโก้ */
             flex-shrink: 0;
             width: 100%;
             box-sizing: border-box;
         }
 
         .clock-widget .clock {
-            /* ใช้หน่วย vmin เพื่อให้ฟอนต์ขยายตามหน้าจอที่แคบที่สุด และสั่งไม่ให้ตัดบรรทัด */
-            font-size: clamp(2rem, 10vw, 4rem); 
+            font-size: clamp(2.5rem, 11vw, 4.5rem); 
             font-weight: 100; 
             color: #ffffff;
             line-height: 1;
@@ -227,46 +226,104 @@
         }
 
         .clock-widget .date {
-            font-size: 0.8rem;
+            font-size: 0.9rem;
             color: var(--accent);
-            margin-top: 4px;
+            margin-top: 6px;
             font-weight: 500;
             text-transform: uppercase;
-            letter-spacing: 1px;
+            letter-spacing: 1.5px;
         }
 
-        /* ข่าวสาร - กระชับที่สุด */
-        .news-list { display: flex; flex-direction: column; gap: 4px; }
-        .news-item {
-            display: flex; gap: 8px; align-items: flex-start;
-            border-bottom: 1px solid rgba(255,255,255,0.05);
-            padding-bottom: 4px; font-size: 0.8rem; line-height: 1.2; color: rgba(255,255,255,0.9);
+        /* New Expanded News Section */
+        .news-section {
+            flex-grow: 1; /* ขยายให้เต็มพื้นที่ที่เหลือ */
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            margin-top: 5px;
         }
-        .news-item:last-child { border-bottom: none; padding-bottom: 0; }
-        .news-tag {
-            background: rgba(255, 255, 255, 0.1); color: #fff; padding: 1px 4px;
-            border-radius: 4px; font-size: 0.55rem; font-weight: 600;
+
+        .news-card-expanded {
+            background: var(--widget-bg);
+            border: 1px solid var(--widget-border);
+            border-radius: 20px;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            height: 100%;
         }
-        
-        .featured-news {
-            display: flex; gap: 10px; margin-bottom: 4px;
-            padding-bottom: 4px; border-bottom: 1px solid rgba(255,255,255,0.08);
+
+        .news-banner {
+            position: relative;
+            height: 18vh;
+            width: 100%;
+            flex-shrink: 0;
+        }
+
+        .news-banner img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .news-banner-overlay {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            padding: 15px;
+            background: linear-gradient(to top, rgba(0,0,0,0.9), transparent);
+        }
+
+        .news-banner-title {
+            font-size: 1rem;
+            font-weight: 600;
+            color: #fff;
+            margin: 0;
+            line-height: 1.3;
+        }
+
+        .news-list-mini {
+            padding: 12px 15px;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .news-item-mini {
+            display: flex;
             align-items: center;
+            gap: 10px;
+            padding-bottom: 8px;
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+            font-size: 0.85rem;
+            color: rgba(255,255,255,0.9);
         }
-        .featured-news-img { width: 60px; height: 45px; object-fit: cover; border-radius: 6px; flex-shrink: 0; }
-        .featured-news-title { font-size: 0.8rem; font-weight: 500; line-height: 1.2; margin: 0; }
+
+        .news-item-mini:last-child { border-bottom: none; }
         
         .update-indicator {
-            position: absolute; top: 8px; right: 8px;
-            width: 4px; height: 4px; border-radius: 50%; background-color: var(--success);
+            position: absolute; top: 10px; right: 10px;
+            width: 5px; height: 5px; border-radius: 50%; background-color: var(--success);
             opacity: 0; transition: opacity 0.5s; z-index: 5;
         }
         .updated .update-indicator { opacity: 1; }
         
+        /* AQI States - ปรับปรุงสีหัวข้อให้อ่านง่าย */
         .aqi-card-good { background: linear-gradient(145deg, rgba(46, 125, 50, 0.8), rgba(76, 175, 80, 0.6)) !important; }
         .aqi-card-moderate { background: linear-gradient(145deg, rgba(212, 160, 23, 0.8), rgba(234, 179, 8, 0.6)) !important; }
         .aqi-card-sensitive { background: linear-gradient(145deg, rgba(230, 81, 0, 0.8), rgba(255, 112, 67, 0.6)) !important; }
         .aqi-card-unhealthy { background: linear-gradient(145deg, rgba(185, 28, 28, 0.8), rgba(220, 38, 38, 0.6)) !important; }
+
+        /* บังคับสีขาวสำหรับการ์ดที่มีพื้นหลังสีสว่าง */
+        .aqi-card-good h3, .aqi-card-moderate h3, .aqi-card-sensitive h3, .aqi-card-unhealthy h3 {
+            color: #ffffff !important;
+            opacity: 1 !important;
+            text-shadow: 0 1px 2px rgba(0,0,0,0.3);
+        }
+        .aqi-card-good .value, .aqi-card-moderate .value, .aqi-card-sensitive .value, .aqi-card-unhealthy .value {
+            color: #ffffff !important;
+        }
     </style>
 </head>
 <body>
@@ -319,55 +376,49 @@
                     <div class="update-indicator"></div>
                     <div class="card-icon-bg" style="color: #f43f5e;"><i data-lucide="droplet"></i></div>
                     <div class="card-row"><h3 class="large-title">OIL WTI</h3></div>
-                    <div class="card-row">
-                        <div class="value huge-value" id="oilPrice">--</div>
-                        <div class="change neutral" id="oilChange">--</div>
-                    </div>
+                    <div class="card-row"><div class="value huge-value" id="oilPrice">--</div><div class="change neutral" id="oilChange">--</div></div>
                 </div>
                 <div class="card" id="goldCard">
                     <div class="update-indicator"></div>
                     <div class="card-icon-bg" style="color: #fbbf24;"><i data-lucide="coins"></i></div>
                     <div class="card-row"><h3 class="large-title">GOLD TH</h3></div>
-                    <div class="card-row">
-                        <div class="value huge-value" id="goldPriceThb">--</div>
-                        <div class="sub-value" id="goldPriceUsd">--</div>
-                    </div>
+                    <div class="card-row"><div class="value huge-value" id="goldPriceThb">--</div><div class="sub-value" id="goldPriceUsd">--</div></div>
                 </div>
                 <div class="card" id="btcCard">
                     <div class="update-indicator"></div>
                     <div class="card-icon-bg" style="color: #f7931a;"><i data-lucide="bitcoin"></i></div>
                     <div class="card-row"><h3 class="large-title" style="color: #f7931a;">BITCOIN</h3></div>
-                    <div class="card-row">
-                        <div class="value huge-value" id="btcPrice">--</div>
-                        <div class="change neutral" id="btcChange">--</div>
-                    </div>
+                    <div class="card-row"><div class="value huge-value" id="btcPrice">--</div><div class="change neutral" id="btcChange">--</div></div>
                 </div>
                 <div class="card" id="fxCard">
                     <div class="update-indicator"></div>
                     <div class="card-icon-bg" style="color: #0a84ff;"><i data-lucide="banknote"></i></div>
                     <div class="card-row"><h3 class="large-title" style="color: #0a84ff;">USD / THB</h3></div>
-                    <div class="card-row">
-                        <div class="value huge-value" id="fxPrice">--</div>
-                        <div class="change neutral" id="fxChange">--</div>
-                    </div>
+                    <div class="card-row"><div class="value huge-value" id="fxPrice">--</div><div class="change neutral" id="fxChange">--</div></div>
                 </div>
             </div>
         </section>
 
-        <section>
-            <h2 class="section-title">ข่าวเด่นประจำวัน</h2>
-            <div class="card card-full" style="align-items: stretch; text-align: left; padding: 8px; min-height: 90px;">
-                <div class="featured-news">
-                    <img src="https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?w=120&q=80" alt="News" class="featured-news-img">
-                    <div style="display: flex; flex-direction: column; gap: 1px;">
-                        <span class="news-tag" style="width: fit-content; background: rgba(10, 132, 255, 0.6);">TECH</span>
-                        <h4 class="featured-news-title">AI เริ่มเข้ามามีบทบาทในอุตสาหกรรมมากขึ้น</h4>
+        <section class="news-section">
+            <h2 class="section-title">📰 LATEST UPDATES</h2>
+            <div class="news-card-expanded">
+                <div class="news-banner">
+                    <img src="https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?w=800&q=80" alt="News Banner">
+                    <div class="news-banner-overlay">
+                        <div style="display: flex; gap: 8px; margin-bottom: 5px;">
+                            <span style="background: var(--accent); color: #000; font-size: 0.6rem; font-weight: 700; padding: 2px 6px; border-radius: 4px;">TRENDING</span>
+                        </div>
+                        <h4 class="news-banner-title">AI เทคโนโลยีที่กำลังเปลี่ยนโฉมอุตสาหกรรมในยุค 40 ปี EBCI</h4>
                     </div>
                 </div>
-                <div class="news-list">
-                    <div class="news-item">
-                        <span class="news-tag" style="background: rgba(255, 149, 0, 0.5);">ECON</span>
-                        <span>ธนาคารกลางประกาศคงอัตราดอกเบี้ยนโยบาย</span>
+                <div class="news-list-mini">
+                    <div class="news-item-mini">
+                        <i data-lucide="arrow-right" style="width: 14px; color: var(--accent);"></i>
+                        <span>ธนาคารกลางประกาศคงอัตราดอกเบี้ยนโยบาย ส่งผลให้ค่าเงินบาททรงตัว</span>
+                    </div>
+                    <div class="news-item-mini">
+                        <i data-lucide="arrow-right" style="width: 14px; color: var(--accent);"></i>
+                        <span>แผนการขยายสาขาใหม่ในปี 2026 มุ่งเน้นการให้บริการที่รวดเร็วและแม่นยำ</span>
                     </div>
                 </div>
             </div>
@@ -387,14 +438,13 @@
         }
 
         const IQAIR_API_KEY = '7c66e548-5227-458c-98b9-b0d2ac308166';
-        const OIL_API_KEY = ''; // <-- ใส่ Token จาก oilpriceapi.com ที่นี่
+        const OIL_API_KEY = ''; 
 
         function updateClock() {
             const now = new Date();
             const h = String(now.getHours()).padStart(2, '0');
             const m = String(now.getMinutes()).padStart(2, '0');
             const s = String(now.getSeconds()).padStart(2, '0');
-            // ใช้ Space แค่ 1 เคาะเพื่อความเสถียรของความกว้าง
             document.getElementById('timeDisplay').textContent = `${h} : ${m} : ${s}`;
             const opt = { weekday: 'short', day: 'numeric', month: 'short' };
             document.getElementById('dateDisplay').textContent = now.toLocaleDateString('en-GB', opt).toUpperCase();
@@ -406,7 +456,7 @@
         }
 
         let lastBtc = 0, lastGoldUsd = 0, lastFx = 0;
-        let baseOilPrice = 75.17; // ราคาฐาน
+        let baseOilPrice = 75.17; 
 
         function renderChange(curr, last, id, pre = '', suf = '', rev = false) {
             const el = document.getElementById(id);
@@ -417,7 +467,6 @@
             el.className = rev ? (d > 0 ? 'change down' : 'change up') : (d > 0 ? 'change up' : 'change down');
         }
 
-        // --- ระบบดึงราคาน้ำมันจริง ---
         async function fetchOilReal() {
             if (!OIL_API_KEY) return;
             try {
@@ -425,19 +474,15 @@
                     headers: { 'Authorization': `Token ${OIL_API_KEY}` }
                 });
                 const d = await res.json();
-                if(d.data && d.data.price) {
-                    baseOilPrice = d.data.price;
-                }
+                if(d.data && d.data.price) baseOilPrice = d.data.price;
             } catch(e) { console.error("Oil API Error", e); }
         }
 
         function updateOilUI() {
-            // จำลองการขยับเล็กน้อยทุกนาที
             const shift = (Math.random() * 0.04) - 0.02;
             const displayPrice = baseOilPrice + shift;
             const el = document.getElementById('oilPrice');
-            const prevText = el.textContent.replace('$', '');
-            const prev = parseFloat(prevText) || displayPrice;
+            const prev = parseFloat(el.textContent.replace('$', '')) || displayPrice;
             el.textContent = `$${displayPrice.toFixed(2)}`;
             renderChange(displayPrice, prev, 'oilChange', '$');
             showUpdateEffect('oilCard');
@@ -503,13 +548,12 @@
                 document.getElementById('aqiCard').className = 'card aqi-card-moderate';
                 document.getElementById('aqiDesc').textContent = "MODERATE";
             }
-
             updateOilUI();
         }
 
         updateClock(); setInterval(updateClock, 1000);
         fetchData(); setInterval(fetchData, 60000);
-        fetchOilReal(); setInterval(fetchOilReal, 14400000); // 4 ชม. ครั้ง
+        fetchOilReal(); setInterval(fetchOilReal, 14400000);
     </script>
 </body>
 </html>
