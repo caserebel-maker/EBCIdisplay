@@ -13,12 +13,12 @@
     <style>
         :root {
             /* สีแบบ Nexus Dark Theme */
-            --bg-color: #050505;
-            --card-bg: rgba(15, 15, 15, 0.75);
-            --card-border: rgba(255, 255, 255, 0.08);
+            --bg-color: #030000;
+            --card-bg: rgba(255, 255, 255, 0.03); /* ปรับให้เป็นกระจกใสขึ้น */
+            --card-border: rgba(255, 255, 255, 0.1);
             --text-main: #ffffff;
             --text-muted: #a1a1aa;
-            --accent-red: #e11d48; /* แดงหลักของ Nexus */
+            --accent-red: #e11d48; 
             --danger: #ef4444; 
             --success: #10b981; 
             --gold: #fbbf24;
@@ -53,10 +53,11 @@
             height: 100%;
             object-fit: cover;
             opacity: 0.6;
-            filter: saturate(1.5) brightness(0.7);
+            /* เทคนิคเปลี่ยนสีวิดีโอจาก ฟ้า -> แดง โดยตรง */
+            filter: hue-rotate(155deg) saturate(1.8) brightness(0.7);
         }
 
-        /* เอฟเฟกต์ Grid & Glow สำรอง (กรณี VDO ไม่มา หน้าจอจะไม่มืด) */
+        /* เอฟเฟกต์ Grid ย้อมแดงจางๆ */
         .fallback-bg {
             position: fixed;
             top: 0;
@@ -65,13 +66,13 @@
             height: 100%;
             z-index: -2;
             background-image: 
-                linear-gradient(rgba(225, 29, 72, 0.05) 1px, transparent 1px),
-                linear-gradient(90deg, rgba(225, 29, 72, 0.05) 1px, transparent 1px);
-            background-size: 50px 50px;
+                linear-gradient(rgba(225, 29, 72, 0.1) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(225, 29, 72, 0.1) 1px, transparent 1px);
+            background-size: 60px 60px;
             pointer-events: none;
         }
 
-        /* แสง Glow สีแดงลอยไปมา */
+        /* แสง Glow สีแดงเข้มลอยหลังกระจก */
         .spotlight {
             position: fixed;
             top: 50%;
@@ -79,15 +80,9 @@
             transform: translate(-50%, -50%);
             width: 100vw;
             height: 100vh;
-            background: radial-gradient(circle at 50% 50%, rgba(225, 29, 72, 0.15) 0%, transparent 60%);
+            background: radial-gradient(circle at 50% 50%, rgba(159, 18, 57, 0.25) 0%, transparent 70%);
             z-index: -1;
             pointer-events: none;
-            animation: pulse 8s infinite ease-in-out;
-        }
-
-        @keyframes pulse {
-            0%, 100% { opacity: 0.5; transform: translate(-50%, -50%) scale(1); }
-            50% { opacity: 1; transform: translate(-50%, -50%) scale(1.2); }
         }
 
         /* Fullscreen Button */
@@ -110,7 +105,6 @@
             backdrop-filter: blur(5px);
             transition: all 0.3s;
         }
-        .fullscreen-btn:hover { opacity: 1; transform: scale(1.1); }
 
         header {
             display: flex;
@@ -122,7 +116,7 @@
 
         .main-logo {
             width: 35%; 
-            max-width: 140px; 
+            max-width: 130px; 
             height: auto;
             object-fit: contain;
             filter: drop-shadow(0 0 15px rgba(225, 29, 72, 0.6)); 
@@ -133,20 +127,21 @@
             display: flex;
             flex-direction: column;
             padding: 0 6vw 3vh 6vw;
-            gap: 1vh; 
+            gap: 1.2vh; 
             justify-content: flex-start;
         }
 
         .section-title {
-            font-size: 0.7rem;
+            font-size: 0.65rem;
             color: var(--text-muted);
             margin: 0 0 5px 5px;
             font-weight: 500;
             text-transform: uppercase;
-            letter-spacing: 2px;
+            letter-spacing: 2.5px;
+            text-shadow: 0 0 10px rgba(225, 29, 72, 0.3);
         }
 
-        /* Card Layouts - Nexus Style */
+        /* Card Layouts - Frosted Glass Style */
         .card-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
@@ -157,10 +152,11 @@
         .card {
             background: var(--card-bg);
             border: 1px solid var(--card-border);
-            border-radius: 14px; 
+            border-radius: 16px; 
             padding: 15px;
-            backdrop-filter: blur(30px);
-            -webkit-backdrop-filter: blur(30px);
+            /* เพิ่มความขุ่นของกระจกให้มากขึ้น */
+            backdrop-filter: blur(40px);
+            -webkit-backdrop-filter: blur(40px);
             position: relative;
             display: flex;
             flex-direction: column;
@@ -168,9 +164,8 @@
             align-items: center;
             text-align: center;
             overflow: hidden;
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
         }
-
-        .card:hover { border-color: rgba(225, 29, 72, 0.4); }
 
         .card h3 {
             margin: 0;
@@ -210,16 +205,18 @@
             margin-top: 3px;
         }
 
-        /* Clock Widget */
+        /* Clock Widget - Frosted Glass */
         .clock-widget {
             background: rgba(255, 255, 255, 0.02);
             border: 1px solid var(--card-border);
-            border-radius: 14px;
-            padding: 15px;
+            border-radius: 16px;
+            padding: 18px;
             text-align: center;
-            backdrop-filter: blur(40px);
-            margin-bottom: 2vh; 
+            backdrop-filter: blur(50px);
+            -webkit-backdrop-filter: blur(50px);
+            margin-bottom: 1.5vh; 
             flex-shrink: 0;
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.5);
         }
 
         .clock-widget .clock {
@@ -227,21 +224,21 @@
             font-weight: 200; 
             color: #ffffff;
             line-height: 1;
-            letter-spacing: 5px;
+            letter-spacing: 6px;
             white-space: nowrap; 
             font-variant-numeric: tabular-nums;
         }
 
         .clock-widget .date {
-            font-size: 0.85rem;
+            font-size: 0.9rem;
             color: var(--accent-red);
             margin-top: 8px;
             font-weight: 500;
             text-transform: uppercase;
-            letter-spacing: 3px;
+            letter-spacing: 4px;
         }
 
-        /* News Section - Nexus Style */
+        /* News Section - Frosted Glass */
         .news-section {
             flex-grow: 1;
             display: flex;
@@ -253,11 +250,12 @@
         .news-card-expanded {
             background: var(--card-bg);
             border: 1px solid var(--card-border);
-            border-radius: 14px;
+            border-radius: 16px;
             overflow: hidden;
             display: flex;
             flex-direction: column;
             height: 100%;
+            backdrop-filter: blur(40px);
         }
 
         .news-banner {
@@ -271,7 +269,7 @@
             width: 100%;
             height: 100%;
             object-fit: cover;
-            filter: brightness(0.65);
+            filter: brightness(0.6) contrast(1.1);
         }
 
         .news-banner-overlay {
@@ -303,18 +301,18 @@
             align-items: center;
             gap: 12px;
             padding-bottom: 8px;
-            border-bottom: 1px solid rgba(255,255,255,0.03);
+            border-bottom: 1px solid rgba(255,255,255,0.05);
             font-size: 0.9rem;
             color: rgba(255,255,255,0.7);
         }
 
         .news-item-mini:last-child { border-bottom: none; }
         
-        /* AQI Indicator Sidebar */
-        .aqi-card-good { border-left: 4px solid #10b981 !important; }
-        .aqi-card-moderate { border-left: 4px solid #f59e0b !important; }
-        .aqi-card-sensitive { border-left: 4px solid #ef4444 !important; }
-        .aqi-card-unhealthy { border-left: 4px solid #991b1b !important; }
+        /* AQI Sidebar Indicator */
+        .aqi-card-good { border-left: 5px solid #10b981 !important; }
+        .aqi-card-moderate { border-left: 5px solid #f59e0b !important; }
+        .aqi-card-sensitive { border-left: 5px solid #ef4444 !important; }
+        .aqi-card-unhealthy { border-left: 5px solid #991b1b !important; }
 
         .up { color: var(--success); }
         .down { color: var(--danger); }
@@ -326,8 +324,8 @@
     <!-- Background Layers -->
     <div class="vdo-container">
         <video autoplay muted loop playsinline id="bg-video">
-            <!-- ลองใช้ไฟล์ในโฟลเดอร์เดียวกันก่อน ถ้าไม่มีจะมองเห็น Grid สำรองที่สร้างไว้ครับ -->
             <source src="background.mp4" type="video/mp4">
+            <!-- ลิงก์วิดีโอสำรอง (ตัวเดิมที่คุณปอนด์ใช้ แต่ถูก Filter ให้เป็นสีแดงแล้วครับ) -->
             <source src="https://player.vimeo.com/external/370331493.sd.mp4?s=7b640822da892c578964d306b83f36070776735e&profile_id=139&oauth2_token_id=57447761" type="video/mp4">
         </video>
     </div>
