@@ -13,11 +13,11 @@
     <style>
         :root {
             /* สีแบบ Nexus Dark Theme */
-            --bg-color: #020202;
-            --card-bg: rgba(10, 10, 10, 0.7);
-            --card-border: rgba(255, 255, 255, 0.05);
+            --bg-color: #050505;
+            --card-bg: rgba(15, 15, 15, 0.75);
+            --card-border: rgba(255, 255, 255, 0.08);
             --text-main: #ffffff;
-            --text-muted: #71717a;
+            --text-muted: #a1a1aa;
             --accent-red: #e11d48; /* แดงหลักของ Nexus */
             --danger: #ef4444; 
             --success: #10b981; 
@@ -36,14 +36,14 @@
             overflow: hidden;
         }
 
-        /* --- Nexus Video Background System --- */
+        /* --- Nexus Background System --- */
         .vdo-container {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            z-index: -2;
+            z-index: -3;
             overflow: hidden;
             background: #000;
         }
@@ -52,21 +52,42 @@
             width: 100%;
             height: 100%;
             object-fit: cover;
-            opacity: 0.5;
-            filter: saturate(1.2) brightness(0.8);
+            opacity: 0.6;
+            filter: saturate(1.5) brightness(0.7);
         }
 
-        /* เอฟเฟกต์แสงฟุ้งสีแดง (Spotlight หลังการ์ด) */
+        /* เอฟเฟกต์ Grid & Glow สำรอง (กรณี VDO ไม่มา หน้าจอจะไม่มืด) */
+        .fallback-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -2;
+            background-image: 
+                linear-gradient(rgba(225, 29, 72, 0.05) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(225, 29, 72, 0.05) 1px, transparent 1px);
+            background-size: 50px 50px;
+            pointer-events: none;
+        }
+
+        /* แสง Glow สีแดงลอยไปมา */
         .spotlight {
             position: fixed;
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
-            width: 80vw;
-            height: 80vh;
-            background: radial-gradient(circle at center, rgba(225, 29, 72, 0.1) 0%, transparent 70%);
+            width: 100vw;
+            height: 100vh;
+            background: radial-gradient(circle at 50% 50%, rgba(225, 29, 72, 0.15) 0%, transparent 60%);
             z-index: -1;
             pointer-events: none;
+            animation: pulse 8s infinite ease-in-out;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 0.5; transform: translate(-50%, -50%) scale(1); }
+            50% { opacity: 1; transform: translate(-50%, -50%) scale(1.2); }
         }
 
         /* Fullscreen Button */
@@ -75,20 +96,21 @@
             top: 15px;
             right: 15px;
             z-index: 100;
-            background: rgba(255, 255, 255, 0.03);
+            background: rgba(255, 255, 255, 0.05);
             border: 1px solid rgba(255, 255, 255, 0.1);
             border-radius: 50%;
-            width: 32px;
-            height: 32px;
+            width: 36px;
+            height: 36px;
             display: flex;
             align-items: center;
             justify-content: center;
             cursor: pointer;
             color: white;
-            opacity: 0.3;
+            opacity: 0.4;
+            backdrop-filter: blur(5px);
             transition: all 0.3s;
         }
-        .fullscreen-btn:hover { opacity: 1; background: rgba(255, 255, 255, 0.1); }
+        .fullscreen-btn:hover { opacity: 1; transform: scale(1.1); }
 
         header {
             display: flex;
@@ -103,7 +125,7 @@
             max-width: 140px; 
             height: auto;
             object-fit: contain;
-            filter: drop-shadow(0 0 20px rgba(225, 29, 72, 0.5)); 
+            filter: drop-shadow(0 0 15px rgba(225, 29, 72, 0.6)); 
         }
 
         .container {
@@ -116,12 +138,12 @@
         }
 
         .section-title {
-            font-size: 0.65rem;
+            font-size: 0.7rem;
             color: var(--text-muted);
             margin: 0 0 5px 5px;
-            font-weight: 400;
+            font-weight: 500;
             text-transform: uppercase;
-            letter-spacing: 2.5px;
+            letter-spacing: 2px;
         }
 
         /* Card Layouts - Nexus Style */
@@ -129,16 +151,16 @@
             display: grid;
             grid-template-columns: 1fr 1fr;
             gap: 12px;
-            margin-bottom: 0.3vh;
+            margin-bottom: 0.5vh;
         }
 
         .card {
             background: var(--card-bg);
             border: 1px solid var(--card-border);
-            border-radius: 12px; 
+            border-radius: 14px; 
             padding: 15px;
-            backdrop-filter: blur(25px);
-            -webkit-backdrop-filter: blur(25px);
+            backdrop-filter: blur(30px);
+            -webkit-backdrop-filter: blur(30px);
             position: relative;
             display: flex;
             flex-direction: column;
@@ -146,16 +168,13 @@
             align-items: center;
             text-align: center;
             overflow: hidden;
-            transition: border 0.4s ease;
         }
 
-        .card:hover {
-            border-color: rgba(225, 29, 72, 0.3);
-        }
+        .card:hover { border-color: rgba(225, 29, 72, 0.4); }
 
         .card h3 {
             margin: 0;
-            font-size: 0.6rem;
+            font-size: 0.65rem;
             color: var(--text-muted);
             font-weight: 500;
             text-transform: uppercase;
@@ -163,39 +182,39 @@
         }
 
         .card h3.large-title {
-            font-size: 0.85rem; 
-            color: rgba(255, 255, 255, 0.8);
+            font-size: 0.9rem; 
+            color: rgba(255, 255, 255, 0.85);
         }
 
         .card .value {
-            font-size: 1.5rem;
+            font-size: 1.6rem;
             font-weight: 600;
             line-height: 1;
             letter-spacing: -0.5px;
         }
 
         .card .value.huge-value {
-            font-size: 2.1rem; 
+            font-size: 2.2rem; 
             font-weight: 700;
         }
 
         .card .change {
-            font-size: 0.75rem;
-            margin-top: 5px;
+            font-size: 0.8rem;
+            margin-top: 6px;
             font-weight: 500;
         }
 
         .sub-value {
-            font-size: 0.7rem;
+            font-size: 0.75rem;
             color: var(--text-muted);
             margin-top: 3px;
         }
 
-        /* Clock Widget - Fixed Wrap */
+        /* Clock Widget */
         .clock-widget {
-            background: rgba(255, 255, 255, 0.01);
+            background: rgba(255, 255, 255, 0.02);
             border: 1px solid var(--card-border);
-            border-radius: 12px;
+            border-radius: 14px;
             padding: 15px;
             text-align: center;
             backdrop-filter: blur(40px);
@@ -204,25 +223,25 @@
         }
 
         .clock-widget .clock {
-            font-size: clamp(2rem, 11vw, 4.2rem); 
+            font-size: clamp(2.2rem, 11vw, 4.5rem); 
             font-weight: 200; 
             color: #ffffff;
             line-height: 1;
-            letter-spacing: 6px;
+            letter-spacing: 5px;
             white-space: nowrap; 
             font-variant-numeric: tabular-nums;
         }
 
         .clock-widget .date {
-            font-size: 0.8rem;
+            font-size: 0.85rem;
             color: var(--accent-red);
             margin-top: 8px;
-            font-weight: 400;
+            font-weight: 500;
             text-transform: uppercase;
-            letter-spacing: 4px;
+            letter-spacing: 3px;
         }
 
-        /* News Section - Compact Nexus */
+        /* News Section - Nexus Style */
         .news-section {
             flex-grow: 1;
             display: flex;
@@ -234,7 +253,7 @@
         .news-card-expanded {
             background: var(--card-bg);
             border: 1px solid var(--card-border);
-            border-radius: 12px;
+            border-radius: 14px;
             overflow: hidden;
             display: flex;
             flex-direction: column;
@@ -252,7 +271,7 @@
             width: 100%;
             height: 100%;
             object-fit: cover;
-            filter: brightness(0.6);
+            filter: brightness(0.65);
         }
 
         .news-banner-overlay {
@@ -260,70 +279,63 @@
             bottom: 0;
             left: 0;
             right: 0;
-            padding: 12px;
-            background: linear-gradient(to top, rgba(0,0,0,0.95), transparent);
+            padding: 15px;
+            background: linear-gradient(to top, rgba(0,0,0,0.9), transparent);
         }
 
         .news-banner-title {
-            font-size: 1rem;
-            font-weight: 500;
+            font-size: 1.05rem;
+            font-weight: 600;
             color: #fff;
             margin: 0;
-            line-height: 1.2;
+            line-height: 1.3;
         }
 
         .news-list-mini {
-            padding: 10px 15px;
+            padding: 12px 15px;
             display: flex;
             flex-direction: column;
-            gap: 6px;
+            gap: 8px;
         }
 
         .news-item-mini {
             display: flex;
             align-items: center;
             gap: 12px;
-            padding-bottom: 6px;
+            padding-bottom: 8px;
             border-bottom: 1px solid rgba(255,255,255,0.03);
-            font-size: 0.85rem;
-            color: rgba(255,255,255,0.6);
+            font-size: 0.9rem;
+            color: rgba(255,255,255,0.7);
         }
 
         .news-item-mini:last-child { border-bottom: none; }
         
-        /* AQI Nexus Colorbar */
-        .aqi-card-good { border-left: 3px solid #10b981 !important; }
-        .aqi-card-moderate { border-left: 3px solid #f59e0b !important; }
-        .aqi-card-sensitive { border-left: 3px solid #ef4444 !important; }
-        .aqi-card-unhealthy { border-left: 3px solid #991b1b !important; }
+        /* AQI Indicator Sidebar */
+        .aqi-card-good { border-left: 4px solid #10b981 !important; }
+        .aqi-card-moderate { border-left: 4px solid #f59e0b !important; }
+        .aqi-card-sensitive { border-left: 4px solid #ef4444 !important; }
+        .aqi-card-unhealthy { border-left: 4px solid #991b1b !important; }
 
         .up { color: var(--success); }
         .down { color: var(--danger); }
         .neutral { color: var(--text-muted); }
-
-        /* Animation Keyframes */
-        .update-flash {
-            animation: flash 1.5s ease-out;
-        }
-        @keyframes flash {
-            0% { background-color: rgba(225, 29, 72, 0.2); }
-            100% { background-color: var(--card-bg); }
-        }
     </style>
 </head>
 <body>
 
-    <!-- Video Background -->
+    <!-- Background Layers -->
     <div class="vdo-container">
         <video autoplay muted loop playsinline id="bg-video">
-            <source src="https://assets.mixkit.co/videos/preview/mixkit-digital-connection-background-with-dots-and-lines-31745-large.mp4" type="video/mp4">
+            <!-- ลองใช้ไฟล์ในโฟลเดอร์เดียวกันก่อน ถ้าไม่มีจะมองเห็น Grid สำรองที่สร้างไว้ครับ -->
+            <source src="background.mp4" type="video/mp4">
+            <source src="https://player.vimeo.com/external/370331493.sd.mp4?s=7b640822da892c578964d306b83f36070776735e&profile_id=139&oauth2_token_id=57447761" type="video/mp4">
         </video>
     </div>
-    <!-- แสงลอยสีแดง -->
+    <div class="fallback-bg"></div>
     <div class="spotlight"></div>
 
     <button class="fullscreen-btn" id="fsBtn" onclick="toggleFullScreen()" title="Toggle Fullscreen">
-        <i data-lucide="maximize-2" style="width: 14px;"></i>
+        <i data-lucide="maximize-2" style="width: 16px;"></i>
     </button>
 
     <header>
@@ -343,12 +355,12 @@
                 <div class="card" id="weatherCard">
                     <h3>WEATHER</h3>
                     <div class="value" id="tempValue">--°C</div>
-                    <div class="change neutral" id="weatherDesc" style="font-size: 0.7rem;">CONNECTING...</div>
+                    <div class="change neutral" id="weatherDesc" style="font-size: 0.75rem;">AWAITING DATA</div>
                 </div>
                 <div class="card" id="aqiCard">
-                    <h3 style="color: #ffffff;">PM2.5 INDEX</h3>
-                    <div class="value" id="aqiValue" style="color: #ffffff;">--</div>
-                    <div class="change neutral" id="aqiDesc" style="font-size: 0.7rem; color: #ffffff;">CONNECTING...</div>
+                    <h3>PM2.5 INDEX</h3>
+                    <div class="value" id="aqiValue">--</div>
+                    <div class="change neutral" id="aqiDesc" style="font-size: 0.75rem;">AWAITING DATA</div>
                 </div>
             </div>
         </section>
@@ -415,7 +427,6 @@
         }
 
         const IQAIR_API_KEY = '7c66e548-5227-458c-98b9-b0d2ac308166';
-        const OIL_API_KEY = ''; 
 
         function updateClock() {
             const now = new Date();
@@ -450,7 +461,6 @@
 
         async function fetchData() {
             try {
-                // Gold
                 const rg = await fetch('https://api.binance.com/api/v3/ticker/price?symbol=PAXGUSDT');
                 const dg = await rg.json();
                 const gu = parseFloat(dg.price);
@@ -463,7 +473,6 @@
             } catch(e) { document.getElementById('goldPriceThb').textContent = "44,500"; }
 
             try {
-                // BTC
                 const rb = await fetch('https://api.binance.com/api/v3/ticker/price?symbol=BTCUSDT');
                 const db = await rb.json();
                 const b = parseFloat(db.price);
@@ -472,7 +481,6 @@
             } catch(e) {}
 
             try {
-                // FX
                 const rf = await fetch('https://open.er-api.com/v6/latest/USD');
                 const df = await rf.json();
                 const fx = df.rates.THB;
@@ -481,7 +489,6 @@
             } catch(e) {}
 
             try {
-                // Env
                 const re = await fetch(`https://api.airvisual.com/v2/city?city=Bangkok&state=Bangkok&country=Thailand&key=${IQAIR_API_KEY}`);
                 const de = await re.json();
                 if(de.status === "success") {
@@ -500,6 +507,7 @@
                 document.getElementById('tempValue').textContent = "32°C";
                 document.getElementById('aqiValue').textContent = "78";
                 document.getElementById('aqiCard').className = 'card aqi-card-moderate';
+                document.getElementById('aqiDesc').textContent = "MODERATE";
             }
             updateOilUI();
         }
