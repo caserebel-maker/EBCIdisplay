@@ -43,7 +43,7 @@
             width: 300vw; 
             height: 300vh;
             z-index: -1;
-            background-image: url('Strategic-Proposal.jpg');
+            background-image: url('Strategic-Proposal.png');
             background-size: cover;
             background-position: center;
             opacity: 0.35; 
@@ -57,6 +57,31 @@
             100% { transform: rotate(360deg); }
         }
 
+        /* Fullscreen Button */
+        .fullscreen-btn {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 100;
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 12px;
+            width: 44px;
+            height: 44px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            backdrop-filter: blur(10px);
+            color: white;
+            transition: all 0.3s ease;
+        }
+
+        .fullscreen-btn:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: scale(1.05);
+        }
+
         /* Header Layout */
         header {
             display: flex;
@@ -67,11 +92,11 @@
 
         .main-logo {
             width: 85%;
-            max-width: 420px; /* ปรับให้พอดีกับจอทีวีแนวตั้ง */
+            max-width: 420px; 
             height: auto;
             object-fit: contain;
             margin-bottom: 5px;
-            filter: drop-shadow(0 4px 8px rgba(0,0,0,0.5)); /* เพิ่มเงาให้โลโก้เด่นขึ้น */
+            filter: drop-shadow(0 4px 8px rgba(0,0,0,0.5)); 
         }
 
         .container {
@@ -256,7 +281,6 @@
         }
         .updated .update-indicator { opacity: 1; }
         
-        /* สไตล์สีเฉพาะการ์ด AQI */
         .aqi-card-good { background: linear-gradient(145deg, rgba(46, 125, 50, 0.85), rgba(76, 175, 80, 0.7)) !important; border: 1px solid rgba(255, 255, 255, 0.2) !important; }
         .aqi-card-moderate { background: linear-gradient(145deg, rgba(212, 160, 23, 0.85), rgba(234, 179, 8, 0.7)) !important; border: 1px solid rgba(255, 255, 255, 0.2) !important; }
         .aqi-card-sensitive { background: linear-gradient(145deg, rgba(230, 81, 0, 0.85), rgba(255, 112, 67, 0.7)) !important; border: 1px solid rgba(255, 255, 255, 0.2) !important; }
@@ -274,9 +298,12 @@
 
     <div class="bg-animation-container"></div>
 
+    <button class="fullscreen-btn" id="fsBtn" onclick="toggleFullScreen()" title="Toggle Fullscreen">
+        <i data-lucide="maximize-2"></i>
+    </button>
+
     <header>
-        <!-- เพิ่ม onerror เพื่อให้แสดงภาพจำลองชั่วคราวเวลาหาไฟล์ไม่เจอในระบบ Preview -->
-        <img src="40white-1_0.jpg" 
+        <img src="40white-1_0.png" 
              alt="40th EBCI Anniversary Logo" 
              class="main-logo"
              onerror="this.src='https://via.placeholder.com/420x120/000000/ff0000?text=40th+EBCI+Logo+Here'; this.onerror=null;">
@@ -363,10 +390,10 @@
                         <i data-lucide="bitcoin"></i>
                     </div>
                     <div class="card-row">
-                        <h3 style="color: #f7931a;">BITCOIN USD</h3>
+                        <h3 class="large-title" style="color: #f7931a;">BITCOIN USD</h3>
                     </div>
                     <div class="card-row">
-                        <div class="value" id="btcPrice">--</div>
+                        <div class="value huge-value" id="btcPrice">--</div>
                         <div class="change neutral" id="btcChange">--</div>
                     </div>
                 </div>
@@ -377,10 +404,10 @@
                         <i data-lucide="banknote"></i>
                     </div>
                     <div class="card-row">
-                        <h3 style="color: #0a84ff;">USD / THB</h3>
+                        <h3 class="large-title" style="color: #0a84ff;">USD / THB</h3>
                     </div>
                     <div class="card-row">
-                        <div class="value" id="fxPrice">--</div>
+                        <div class="value huge-value" id="fxPrice">--</div>
                         <div class="change neutral" id="fxChange">--</div>
                     </div>
                 </div>
@@ -417,6 +444,23 @@
     <script>
         lucide.createIcons();
 
+        // Fullscreen Toggle Function
+        function toggleFullScreen() {
+            const btn = document.getElementById('fsBtn');
+            if (!document.fullscreenElement) {
+                document.documentElement.requestFullscreen().catch(err => {
+                    console.error(`Error: ${err.message}`);
+                });
+                btn.innerHTML = '<i data-lucide="minimize-2"></i>';
+            } else {
+                if (document.exitFullscreen) {
+                    document.exitFullscreen();
+                }
+                btn.innerHTML = '<i data-lucide="maximize-2"></i>';
+            }
+            lucide.createIcons();
+        }
+
         const IQAIR_API_KEY = '7c66e548-5227-458c-98b9-b0d2ac308166';
         const OIL_API_KEY = ''; 
 
@@ -445,7 +489,6 @@
         let lastFx = 0;
         let lastOilPrice = 0;
         
-        // ตัวแปรข้อมูลจำลอง (Fallback Data) ไว้ใช้ยามฉุกเฉิน
         let mockBtc = 68450;
         let mockGoldThb = 41500;
         let mockGoldUsd = 2350.50;
@@ -469,11 +512,8 @@
             }
         }
 
-        // ================= ฟังก์ชันดึงข้อมูลแบบมี Fallback ป้องกันจอดำ =================
-
         async function fetchGoldPrice() {
             try {
-                // ดึงราคาทองโลก
                 const binanceRes = await fetch('https://api.binance.com/api/v3/ticker/price?symbol=PAXGUSDT');
                 if(!binanceRes.ok) throw new Error("Binance API Failed");
                 const binanceData = await binanceRes.json();
@@ -483,7 +523,6 @@
                 renderChange(goldUsd, lastGoldUsd, 'goldChange', '$');
                 lastGoldUsd = goldUsd;
 
-                // ดึงราคาทองไทย
                 const thGoldRes = await fetch('https://api.chnwt.dev/thai-gold-api/latest');
                 if(!thGoldRes.ok) throw new Error("Thai Gold API Failed");
                 const thGoldData = await thGoldRes.json();
@@ -494,8 +533,7 @@
                 document.getElementById('goldPriceThb').textContent = `${goldThb.toLocaleString()}`;
                 showUpdateEffect('goldCard');
             } catch (error) {
-                console.warn("ใช้ข้อมูลทองคำสำรอง (Fallback) เนื่องจาก API โดนบล็อก");
-                // สุ่มให้ตัวเลขขยับหลอกตา
+                console.warn("Using Fallback for Gold");
                 mockGoldThb += (Math.random() > 0.5 ? 50 : -50);
                 mockGoldUsd += (Math.random() * 4 - 2);
                 document.getElementById('goldPriceThb').textContent = `${mockGoldThb.toLocaleString()}`;
@@ -518,7 +556,7 @@
                 lastBtc = btcUsd;
                 showUpdateEffect('btcCard');
             } catch (error) {
-                console.warn("ใช้ข้อมูล BTC สำรอง (Fallback)");
+                console.warn("Using Fallback for BTC");
                 mockBtc += (Math.random() * 100 - 50);
                 document.getElementById('btcPrice').textContent = `${Math.round(mockBtc).toLocaleString()}`;
                 renderChange(mockBtc, lastBtc || 68450, 'btcChange', '$');
@@ -539,7 +577,7 @@
                 lastFx = fxRate;
                 showUpdateEffect('fxCard');
             } catch (error) {
-                console.warn("ใช้ข้อมูล FX สำรอง (Fallback)");
+                console.warn("Using Fallback for FX");
                 mockFx += (Math.random() * 0.04 - 0.02);
                 document.getElementById('fxPrice').textContent = `${mockFx.toFixed(2)}`;
                 renderChange(mockFx, lastFx || 35.45, 'fxChange', '', ' ฿', true);
@@ -573,26 +611,23 @@
                         
                         showUpdateEffect('aqiCard');
                         showUpdateEffect('weatherCard');
-                        return; // ออกจากฟังก์ชันถ้าสำเร็จ
+                        return; 
                     }
                 }
-                throw new Error("IQAir Key Missing or Failed");
+                throw new Error("IQAir Failed");
             } catch (error) {
-                console.warn("ดึงข้อมูล IQAir ล้มเหลว ใช้ข้อมูลอากาศจาก Open-Meteo แทน");
+                console.warn("Fallback Environment");
                 try {
-                    // Fallback 1: ดึงจาก Open Meteo (ฟรี ไม่ต้องใช้ Key)
                     const weatherRes = await fetch('https://api.open-meteo.com/v1/forecast?latitude=13.75&longitude=100.51&current=temperature_2m');
                     const weatherData = await weatherRes.json();
                     document.getElementById('tempValue').textContent = `${weatherData.current.temperature_2m}°C`;
                     document.getElementById('weatherDesc').textContent = "UPDATED (Meteo)";
-                    
-                    document.getElementById('aqiValue').textContent = `52`; // ค่าฝุ่นจำลอง
+                    document.getElementById('aqiValue').textContent = `52`; 
                     document.getElementById('aqiDesc').textContent = "🟡 MODERATE";
                     document.getElementById('aqiCard').classList.add('aqi-card-moderate');
                     showUpdateEffect('aqiCard');
                     showUpdateEffect('weatherCard');
-                } catch (fallbackError) {
-                    // Fallback 2: จอไม่ดำแน่นอน 100%
+                } catch (e) {
                     document.getElementById('tempValue').textContent = `32°C`;
                     document.getElementById('weatherDesc').textContent = "SIMULATED";
                     document.getElementById('aqiValue').textContent = `52`; 
@@ -604,7 +639,6 @@
         
         async function fetchOilPriceReal() {
             if (!OIL_API_KEY || OIL_API_KEY === '') {
-                // Fallback น้ำมันจำลอง
                 const shift = (Math.random() * 0.5) - 0.25; 
                 const oldPrice = mockOil;
                 mockOil += shift;
@@ -627,7 +661,6 @@
                 lastOilPrice = price;
                 showUpdateEffect('oilCard');
             } catch (error) {
-                console.warn("ใช้ข้อมูลน้ำมันสำรอง (Fallback)");
                 const shift = (Math.random() * 0.5) - 0.25; 
                 const oldPrice = mockOil;
                 mockOil += shift;
